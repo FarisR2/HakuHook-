@@ -1,0 +1,13 @@
+project: hakuhook
+stack:
+  language: javascript
+  package_manager: pnpm
+  type: module
+testing:
+  strict_tdd: false
+  reason: "No test runner configured in package.json"
+  capabilities:
+    runners: []
+    linters: []
+    formatters: []
+    type_checkers: []

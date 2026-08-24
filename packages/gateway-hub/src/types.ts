@@ -7,6 +7,8 @@ export interface ClientInfo {
   role: ClientRole;
 }
 
+// Permitira identificara los roles correctos 
+// al momento de llegar los mensajes a los roles que les corresponde
 export interface Room {
   projectId: string;
   senior: ClientInfo | null;

@@ -41,17 +41,18 @@ export function removeClient(client: ClientInfo): void {
     } else {
       room.juniors.delete(client)
     }
-
     for (const [approvalId, approval] of approvals) {
       if (approval.requester === client) { // Verificar si la peticion es de la persona que se fue
         approvals.delete(approvalId)
       }
     }
-
-    if (!room.senior && room.juniors.size === 0) {
-      rooms.delete(client.projectId)
-    }
   }
+
+  //
+  if (!room.senior && room.juniors.size === 0) {
+    rooms.delete(client.projectId)
+  }
+
 }
 
 export function getSenior(projectId: string): ClientInfo | null {

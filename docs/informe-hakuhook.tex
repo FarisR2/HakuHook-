@@ -1,0 +1,486 @@
+% ============================================================================
+%  HakuHook — Informe de desarrollo del Gateway Hub
+%  Documento vivo: se actualiza conforme avanza el proyecto.
+%  Compilar con: pdflatex informe-hakuhook.tex
+% ============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+% ---------- Colores ----------
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{codeframe}{RGB}{210,210,210}
+\definecolor{kw}{RGB}{0,80,160}
+\definecolor{typekw}{RGB}{140,60,20}
+\definecolor{cmt}{RGB}{90,120,90}
+\definecolor{str}{RGB}{170,60,60}
+
+% ---------- Lenguaje TypeScript para listings ----------
+\lstdefinelanguage{TypeScript}{
+  keywords={const,let,var,function,return,if,else,throw,new,for,of,in,import,from,export,type,interface,class,extends,implements,void,true,false,null},
+  keywordstyle=\color{kw}\bfseries,
+  ndkeywords={Map,Set,WebSocket,ClientInfo,Room,PendingApproval,JsonRpcResponse,JsonRpcError,ClientRole},
+  ndkeywordstyle=\color{typekw}\bfseries,
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstset{
+  language=TypeScript,
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{cmt}\itshape,
+  stringstyle=\color{str},
+  tabsize=2,
+  captionpos=b,
+  aboveskip=0.8em,
+  belowskip=0.8em
+}
+
+% ---------- Encabezado / pie ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{HakuHook --- Informe de desarrollo}
+\fancyhead[R]{gateway-hub}
+\fancyfoot[C]{\thepage}
+
+\title{\textbf{HakuHook --- Informe de desarrollo}\\ \large Gateway Hub: WebSocket relay HITL}
+\author{Haku}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% ===========================================================================
+\section{Introducción y visión del producto}
+% ===========================================================================
+
+HakuHook es un sistema de \textbf{guardrails y arbitraje multi-agente en tiempo
+real} (\textbf{HITL}, \emph{human in the loop}) cuyo objetivo es prevenir el
+\emph{scope creep} y la degradación arquitectónica cuando desarrolladores junior
+usan agentes de IA (Antigravity, Cursor, Claude Code) en proyectos corporativos.
+
+El flujo general es:
+
+\begin{enumerate}
+  \item Un hook transparente intercepta \textbf{exclusivamente} tool calls
+        destructivos o de alto impacto (\texttt{write\_file},
+        \texttt{create\_file}, \texttt{execute\_command}, migraciones de base de datos).
+  \item Retiene la promesa de ejecución y envía el contexto
+        (prompt del junior + tool call + diff propuesto) al entorno del
+        \textbf{Tech Lead / Senior}.
+  \item En la máquina del senior, un \textbf{LLM evaluador} integrado con
+        Gentle-AI / RDD / skills arquitectónicas analiza el impacto y presenta
+        un veredicto estructurado: \texttt{[Aprobar]},
+        \texttt{[Rechazar con feedback pedagógico]}, \texttt{[Modificar]}.
+\end{enumerate}
+
+El modelo de roles es asimétrico por diseño:
+
+\begin{itemize}
+  \item \textbf{Junior}: el agente de IA que \emph{propone} y \emph{pide permiso}
+        para ejecutar acciones destructivas.
+  \item \textbf{Senior}: el humano (HITL) que \emph{arbitra}: revisa el contexto
+        y \emph{decide} aprobar, rechazar o modificar.
+\end{itemize}
+
+\section{Arquitectura del monorepo}
+
+Monorepo TypeScript con pnpm workspaces bajo el scope \texttt{@hakuhook/*}.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{3.2cm}p{7.5cm}p{2.8cm}@{}}
+    \toprule
+    \textbf{Paquete} & \textbf{Rol} & \textbf{Estado} \\
+    \midrule
+    \texttt{shared} & Tipos comunes, interfaces de sesión,
+                      contratos JSON-RPC 2.0 & Completado \\
+    \texttt{gateway-hub} & Servidor WebSocket relay; salas por \texttt{projectId};
+                           sincroniza peticiones junior $\leftrightarrow$ senior
+                           en tiempo real & \textbf{En desarrollo} \\
+    \texttt{proxy-mcp} & Interceptor STDIO para MCP; filtra llamadas y se
+                         comunica vía WebSocket con el hub & Pendiente \\
+    \texttt{evaluator} & Motor de arbitraje del senior; evalúa diff con LLM;
+                         UI interactiva en terminal & Pendiente \\
+    \texttt{cli} & Binario global (\texttt{hakuhook init}, \texttt{hakuhook login});
+                   aislamiento por repositorio & Pendiente \\
+    \bottomrule
+  \end{tabular}
+  \caption{Paquetes del monorepo y su estado.}
+\end{table}
+
+\section{Estado del roadmap}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{1.6cm}p{5.2cm}p{3cm}p{3.4cm}@{}}
+    \toprule
+    \textbf{Paso} & \textbf{Contenido} & \textbf{Estado} & \textbf{Evidencia} \\
+    \midrule
+    1 & Tipos base (\texttt{types.ts}) & Completado & Commit \texttt{2c8054a} \\
+    2 & Utilidades JSON-RPC (\texttt{json-rpc.ts}) & Completado & Commit \texttt{2c8054a} \\
+    3 & Registro de salas (\texttt{room-manager.ts}) & Completado & Commits \texttt{93bf9a5}, \texttt{561a96e} \\
+    4 & Handlers (routing junior $\rightarrow$ senior) & Pendiente & --- \\
+    5 & Servidor WebSocket (\texttt{server.ts} + \texttt{ws.d.ts}) & Pendiente & --- \\
+    6 & Punto de entrada (\texttt{index.ts}) + build & Pendiente & --- \\
+    \bottomrule
+  \end{tabular}
+  \caption{Roadmap de implementación del gateway-hub.}
+\end{table}
+
+El build actual pasa correctamente: \texttt{pnpm build} (TypeScript compila sin errores).
+
+\section{Detalle paso a paso}
+
+\subsection{Paso 1: Tipos base}
+
+Define la ``tarjeta'' de cada participante, la sala y las peticiones pendientes.
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/types.ts]
+import type { WebSocket } from "ws";
+import type { ClientRole } from "@hakuhook/shared";
+
+export interface ClientInfo {
+  socket: WebSocket;
+  projectId: string;
+  role: ClientRole;
+}
+
+export interface Room {
+  projectId: string;
+  senior: ClientInfo | null;
+  juniors: Set<ClientInfo>
+}
+
+export interface PendingApproval {
+  projectId: string;
+  requester: ClientInfo;
+}
+\end{lstlisting}
+
+Tipos compartidos relevantes (definen el contrato de negocio):
+
+\begin{lstlisting}[caption=packages/shared/src/types.ts (extracto)]
+export type ClientRole = "junior" | "senior";
+
+export interface ApprovalDecision {
+  requestId: string | number;
+  status: "approved" | "rejected" | "modified";
+  feedback?: string;
+  modifiedArguments?: Record<string, any>;
+}
+\end{lstlisting}
+
+\begin{itemize}
+  \item \texttt{ClientInfo} es la tarjeta: conexión, sala a la que pertenece y rol.
+  \item \texttt{Room} modela la asimetría: una casilla única de senior
+        (\texttt{ClientInfo | null}) y una colección de juniors (\texttt{Set}).
+  \item \texttt{PendingApproval} no lleva \texttt{id}: la llave (el
+        \texttt{approvalId}) se genera en los handlers (Paso 4).
+\end{itemize}
+
+\subsection{Paso 2: Utilidades JSON-RPC}
+
+Helpers para enviar respuestas y errores por el socket según el contrato JSON-RPC 2.0.
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/json-rpc.ts]
+import type { WebSocket } from "ws";
+import type { JsonRpcError, JsonRpcResponse } from "@hakuhook/shared";
+
+export function send(socket: WebSocket, message: unknown): void {
+  socket.send(JSON.stringify(message))
+}
+
+export function sendResult(
+  socket: WebSocket,
+  id: string | number,
+  result: unknown,
+): void {
+  const response: JsonRpcResponse = { jsonrpc: "2.0", id, result };
+  send(socket, response);
+}
+
+export function sendError(
+  socket: WebSocket,
+  id: string | number,
+  code: number,
+  message: string,
+): void {
+  const error: JsonRpcError = { code, message };
+  const response: JsonRpcResponse = { jsonrpc: "2.0", id, error };
+  send(socket, response);
+}
+\end{lstlisting}
+
+\subsection{Paso 3: Room manager}
+
+El \texttt{room-manager} es un \textbf{registro pasivo}: sabe quién está en cada
+sala, pero no envía mensajes. Los handlers (Paso 4) lo consultan para enrutar.
+
+Diseño: módulo-singleton con dos contenedores a nivel de módulo:
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/room-manager.ts (vista corregida)]
+import type { ClientInfo, PendingApproval, Room } from "./types.js";
+
+const rooms = new Map<string, Room>();
+const approvals = new Map<string, PendingApproval>()
+
+export function joinRoom(client: ClientInfo): Room {
+  let room = rooms.get(client.projectId)
+
+  if (client.role == "senior" && room?.senior) {
+    throw new Error(
+      `Project "${client.projectId}" already has an active senior`,
+    )
+  }
+
+  if (!room) {
+    room = {
+      projectId: client.projectId,
+      senior: null,
+      juniors: new Set(),
+    }
+    rooms.set(client.projectId, room)
+  }
+
+  if (client.role == "senior") {
+    room.senior = client
+  } else {
+    room.juniors.add(client)
+  }
+
+  return room
+}
+
+export function removeClient(client: ClientInfo): void {
+  const room = rooms.get(client.projectId)
+  if (!room) return
+
+  // Capa 1: quitar de la sala segun su contenedor
+  if (client.role == "senior") {
+    if (room.senior === client) {
+      room.senior = null
+    }
+  } else {
+    room.juniors.delete(client)
+  }
+
+  // Capa 2: purgar aprobaciones fantasma (aplica a cualquier rol)
+  for (const [approvalId, approval] of approvals) {
+    if (approval.requester === client) {
+      approvals.delete(approvalId)
+    }
+  }
+
+  // Capa 3: GC de sala vacia (aplica a cualquier rol)
+  if (!room.senior && room.juniors.size === 0) {
+    rooms.delete(client.projectId)
+  }
+}
+
+export function getSenior(projectId: string): ClientInfo | null {
+  const senior = rooms.get(projectId)?.senior
+  if (!senior) return null
+  return { ...senior }
+}
+
+export function getJuniors(projectId: string): ClientInfo[] {
+  const room = rooms.get(projectId)
+  if (!room) return []
+  return [...room.juniors].map((junior) => ({ ...junior }))
+}
+
+export function requestApproval(approvalId: string, client: ClientInfo): PendingApproval {
+  const approval: PendingApproval = {
+    projectId: client.projectId,
+    requester: client,
+  }
+  approvals.set(approvalId, approval)
+  return approval
+}
+
+export function takeApproval(approvalId: string): PendingApproval | null {
+  const approval = approvals.get(approvalId)
+  if (!approval) return null
+  approvals.delete(approvalId)
+  return approval
+}
+\end{lstlisting}
+
+\textbf{Nota:} la versión mostrada incluye la corrección documentada en la
+Sección~\ref{sec:hallazgos}. El código \emph{commiteado} en el repositorio aún
+tiene el error pendiente de aplicar.
+
+\subsubsection{Las tres capas de \texttt{removeClient}}
+
+\begin{itemize}
+  \item \textbf{Capa 1 (detach):} quitar la tarjeta según su contenedor.
+        El junior se borra de la colección (\texttt{Set.delete}); la casilla del
+        senior se vacía asignando \texttt{null}.
+  \item \textbf{Capa 2 (fantasmas):} las peticiones pendientes del que se va se
+        eliminan de la bandeja. La llave de \texttt{approvals} es el
+        \texttt{approvalId} (no la persona), por lo que hay que barrer todas
+        las entradas con un \texttt{for} y comparar por identidad.
+  \item \textbf{Capa 3 (GC):} si la sala quedó sin senior y sin juniors, se
+        elimina del registro. La cierra \emph{el último que sale},
+        independientemente del rol.
+\end{itemize}
+
+\subsubsection{Mecanismos de almacenamiento}
+
+Cada contenedor se vacía con su herramienta correcta:
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{3.6cm}p{4.4cm}p{5cm}@{}}
+    \toprule
+    \textbf{Contenedor} & \textbf{Qué es} & \textbf{Cómo se vacía} \\
+    \midrule
+    \texttt{room.senior} & Casilla única (propiedad) & \texttt{room.senior = null} \\
+    \texttt{room.juniors} & Colección (\texttt{Set}) & \texttt{room.juniors.delete(client)} \\
+    \texttt{rooms} / \texttt{approvals} & Cajonera (\texttt{Map}) & \texttt{<map>.delete(llave)} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Formas de quitar elementos según el contenedor.}
+\end{table}
+
+\subsubsection{Asimetría senior vs.\ junior}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{3.2cm}p{5.4cm}p{5.4cm}@{}}
+    \toprule
+    & \textbf{Junior} & \textbf{Senior} \\
+    \midrule
+    Qué es & Agente de IA del dev & Tech Lead humano (HITL) \\
+    Qué hace & Pide permiso (\texttt{requestApproval}, es el \texttt{requester}) &
+               Toma el permiso (\texttt{takeApproval}) y decide
+               (\texttt{ApprovalDecision}) \\
+    Cantidad por sala & Muchos (\texttt{Set}) & Uno (casilla única) \\
+    Regla especial & --- & Máximo un senior por sala (lanza error) \\
+    \bottomrule
+  \end{tabular}
+  \caption{El junior propone; el senior arbitra.}
+\end{table}
+
+\section{Conceptos clave aprendidos}
+
+\begin{description}
+  \item[Map y sus métodos] Un \texttt{Map} es una cajonera: \texttt{get(llave)}
+        abre un cajón (o devuelve \texttt{undefined}), \texttt{set} guarda,
+        \texttt{delete} quita entrada por llave.
+  \item[Tipos genéricos] \texttt{Map<string, Room>} se lee ``cajonera con
+        etiquetas string que guarda Rooms'': primer parámetro = tipo de llave,
+        segundo = tipo de valor.
+  \item[Identidad por referencia] \texttt{===} entre objetos compara la
+        dirección de memoria, no el contenido. Dos tarjetas que se ven iguales
+        son dos objetos distintos. Es la base de \texttt{Set.delete} y de
+        \texttt{room.senior === client}.
+  \item[Casilla única vs.\ colección] El senior vive en una casilla
+        (\texttt{ClientInfo | null}); los juniors en una colección. Por eso se
+        vacían distinto.
+  \item[Checkout semántico] \texttt{takeApproval} \emph{saca} la petición de la
+        bandeja: al tomarla, nadie más puede tomarla. Tomar = sacar.
+  \item[Validar antes de mutar] Comprobar invariantes (ej.\ un solo senior)
+        antes de modificar el estado.
+  \item[Lazy init] Crear la sala solo cuando llega la primera persona; no
+        pre-crear nada.
+  \item[GC de sala vacía] Borrar del registro la sala que se queda sin nadie
+        (el último apaga la luz).
+  \item[Snapshot copy] \texttt{getSenior}/\texttt{getJuniors} devuelven copias
+        (\texttt{\{ ...x \}}), no referencias internas: se puede leer, no mutar.
+\end{description}
+
+\section{Hallazgos y correcciones}
+\label{sec:hallazgos}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{2.4cm}p{6.4cm}p{2.4cm}p{2.6cm}@{}}
+    \toprule
+    \textbf{Fecha} & \textbf{Hallazgo} & \textbf{Impacto} & \textbf{Estado} \\
+    \midrule
+    2026-08-30 & \texttt{removeClient}: toda la limpieza quedó anidada dentro
+                 de \texttt{if (client.role == "senior")}. Consecuencias:
+                 (1) un junior que se va NO se elimina de la sala;
+                 (2) sus aprobaciones fantasma no se purgan;
+                 (3) la sala nunca se cierra cuando el último en irse es junior
+                 (no hay GC). & El registro queda con juniors ``fantasma'' y el
+                 relay podría enviar mensajes a sockets muertos. &
+                 Corregido en el informe, pendiente de aplicar en el repo. \\
+    \bottomrule
+  \end{tabular}
+  \caption{Errores detectados durante el desarrollo.}
+\end{table}
+
+La corrección consiste en sacar la limpieza de aprobaciones y el GC \emph{fuerza}
+del bloque \texttt{if (client.role == "senior")}, y dejar el
+\texttt{if/else} de rol únicamente para decidir \emph{cómo} se desengancha la
+tarjeta (casilla vs.\ colección). Aplicar y volver a compilar:
+\texttt{pnpm build}.
+
+\section{Próximos pasos}
+
+\begin{enumerate}
+  \item \textbf{Paso 4 --- Handlers:} el registro cobra vida.
+        \begin{itemize}
+          \item Handler del junior: genera el \texttt{approvalId}, registra al
+                junior (\texttt{joinRoom}), deja la petición
+                (\texttt{requestApproval}) y avisa al senior de la sala
+                (\texttt{getSenior}).
+          \item Handler del senior: toma la petición (\texttt{takeApproval}),
+                genera la \texttt{ApprovalDecision} y la devuelve al junior
+                originador (el \texttt{requester}).
+        \end{itemize}
+  \item \textbf{Paso 5 --- Servidor WebSocket:} \texttt{server.ts} +
+        \texttt{ws.d.ts} (tipos para eventos de \texttt{ws}).
+  \item \textbf{Paso 6 --- Punto de entrada:} \texttt{index.ts} + build final.
+\end{enumerate}
+
+\section{Bitácora de cambios}
+
+Registro de avances. Agregar una fila por cada cambio significativo.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{2.6cm}p{3.2cm}p{7.6cm}@{}}
+    \toprule
+    \textbf{Fecha} & \textbf{Commit} & \textbf{Descripción} \\
+    \midrule
+    2026-08-23 & \texttt{561a96e} & \texttt{removeClient}, \texttt{getSenior},
+                  \texttt{getJuniors}, \texttt{requestApproval},
+                  \texttt{takeApproval} \\
+    2026-08-23 & \texttt{93bf9a5} & \texttt{joinRoom} (validar antes de mutar,
+                  lazy init, un solo senior) \\
+    2026-08-20 & \texttt{2c8054a} & Tipos base + utilidades JSON-RPC \\
+    2026-08-20 & \texttt{f75e348} & Ignorar dependencias (\texttt{.gitignore}) \\
+    2026-08-20 & \texttt{7e8aefe} & Tipos del gateway-hub \\
+    \bottomrule
+  \end{tabular}
+  \caption{Bitácora de cambios del gateway-hub.}
+\end{table}
+
+\end{document}

@@ -143,9 +143,12 @@ Monorepo TypeScript con pnpm workspaces bajo el scope \texttt{@hakuhook/*}.
     1 & Tipos base (\texttt{types.ts}) & Completado & Commit \texttt{2c8054a} \\
     2 & Utilidades JSON-RPC (\texttt{json-rpc.ts}) & Completado & Commit \texttt{2c8054a} \\
     3 & Registro de salas (\texttt{room-manager.ts}) & Completado & Commits \texttt{93bf9a5}, \texttt{561a96e} \\
-    4 & Handlers (routing junior $\rightarrow$ senior) & Pendiente & --- \\
-    5 & Servidor WebSocket (\texttt{server.ts} + \texttt{ws.d.ts}) & Pendiente & --- \\
-    6 & Punto de entrada (\texttt{index.ts}) + build & Pendiente & --- \\
+    4 & Handlers (routing junior $\rightarrow$ senior) & En desarrollo &
+           \texttt{register-session.ts} completo; \texttt{request-approval.ts}
+           con firma, cuerpo pendiente \\
+    5 & Carnet de conexiones (\texttt{connection-store.ts}) & Completado & Sesión 2026-09-02 \\
+    6 & Servidor WebSocket + dispatcher (\texttt{server.ts}) & Pendiente & --- \\
+    7 & Punto de entrada (\texttt{index.ts}) + build & Pendiente & --- \\
     \bottomrule
   \end{tabular}
   \caption{Roadmap de implementación del gateway-hub.}
@@ -386,6 +389,149 @@ Cada contenedor se vacía con su herramienta correcta:
   \caption{El junior propone; el senior arbitra.}
 \end{table}
 
+\subsection{Paso 4: Handlers -- el routing junior $\rightarrow$ senior}
+
+En este paso el registro ``cobra vida'': los clientes, una vez en su sala,
+empiezan a \emph{pedir permiso}. Los handlers reciben el mensaje JSON-RPC ya
+enrutado y lo convierten en acciones sobre las salas y las peticiones.
+
+\subsubsection{El handler de registro (\texttt{register-session.ts})}
+
+Su trabajo es \textbf{asociar una conexión a una sala y a un rol}. Es el
+\emph{único} lugar donde el servidor aprende ``quién es'' cada socket.
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/handlers/register-session.ts]
+import type { JsonRpcRequest, RegisterSessionParams } from "@hakuhook/shared";
+import type { WebSocket } from "ws";
+import type { ClientInfo } from "../types.js";
+import { joinRoom } from "../room-manager.js"
+import { sendError, sendResult } from "../json-rpc.js";
+
+export function handlerSession(
+  jsonRpc: JsonRpcRequest<RegisterSessionParams>,
+  socket: WebSocket
+): void {
+  const { projectId, role } = jsonRpc.params;
+
+  if (role !== "junior" && role !== "senior") {
+    sendError(socket, jsonRpc.id!, -32602, `Invalid role: "${role}"`);
+    return;
+  }
+
+  const client: ClientInfo = { socket, projectId, role };
+
+  try {
+    const room = joinRoom(client);
+    sendResult(socket, jsonRpc.id!, { projectId: room.projectId, role });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    sendError(socket, jsonRpc.id!, -32000, message)
+  }
+}
+\end{lstlisting}
+
+Puntos clave de su lógica:
+
+\begin{itemize}
+  \item \textbf{Generic \texttt{RegisterSessionParams}}: le dice a TypeScript que
+        los \texttt{params} del mensaje traen \texttt{projectId} y \texttt{role};
+        sin el generic, \texttt{jsonRpc.params} sería \texttt{unknown} y no se
+        podría leer \texttt{params.projectId}.
+  \item \textbf{Validar antes de mutar}: se valida el \texttt{role} con
+        \texttt{sendError(-32602)} \emph{antes} de tocar el estado. El error
+        JSON-RPC \texttt{-32602} es ``Invalid params''.
+  \item \textbf{\texttt{try/catch}:} el único riesgo real es \texttt{joinRoom}
+        (que lanza si la sala ya tiene senior). Si falla, se responde
+        \texttt{sendError(-32000)} (error de negocio/servidor), y el cambio no
+        se aplica.
+  \item \textbf{Non-null assertion \texttt{id!}}: \texttt{id} es opcional en el
+        contrato, pero acá se necesita sí o sí para responder; el \texttt{!}
+        ``confirma'' a TypeScript que existe.
+\end{itemize}
+
+\textbf{Pendiente de conectar:} este handler aún \emph{no} llama a
+\texttt{registerClient} cuando construye el \texttt{ClientInfo}; sin ese cable,
+el carnet de conexiones nunca se llena y todo \texttt{request-approval}
+devolvería ``Not registered''.
+
+\subsubsection{El handler de petición (\texttt{request-approval.ts})}
+
+Por ahora solo tiene la \textbf{firma} escrita; el cuerpo está vacío. La firma
+ya marca una decisión clave de diseño:
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/handlers/request-approval.ts (esqueleto)]
+import type { JsonRpcRequest, DestructiveToolParams } from "@hakuhook/shared";
+import type { WebSocket } from "ws";
+
+export function handlerRequestApproval(
+  jsonRpc: JsonRpcRequest<DestructiveToolParams>,
+  socket: WebSocket
+): void {
+
+}
+\end{lstlisting}
+
+\textbf{¿Para qué se tipa con \texttt{DestructiveToolParams}?} Para leer el
+\emph{contenido} de la petición (\texttt{toolName}, \texttt{arguments},
+\texttt{diff}, \texttt{prompt}). Es importante notar que este tipo \textbf{no
+trae \texttt{projectId}}: el \texttt{projectId} se obtiene del carnet de
+conexiones mediante \texttt{getClient(socket)}, nunca de los \texttt{params}.
+
+\subsubsection{El carnet de conexiones (\texttt{connection-store.ts})}
+
+Nuevo módulo que resuelve la pregunta \emph{``¿quién es el dueño de este
+socket?''}. Es el ``carnet de identidad por conexión''.
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/connection-store.ts]
+import type { WebSocket } from "ws";
+import type { ClientInfo } from "./types.js";
+
+const clients = new Map<WebSocket, ClientInfo>();
+
+export function registerClient(client: ClientInfo): void {
+  clients.set(client.socket, client);
+}
+
+export function getClient(socket: WebSocket): ClientInfo | undefined {
+  return clients.get(socket);
+}
+
+export function removeClientConnection(socket: WebSocket): void {
+  clients.delete(socket);
+}
+\end{lstlisting}
+
+Puntos clave:
+
+\begin{itemize}
+  \item \textbf{Map privado por conexión}: \texttt{Map<WebSocket, ClientInfo>}
+        relaciona cada socket con su tarjeta (que incluye el \texttt{projectId}).
+        Es un carnet distinto del \texttt{rooms} (que es por \emph{sala}).
+  \item \textbf{Guardianía}: \texttt{clients} es privado; se expone solo
+        \texttt{registerClient}, \texttt{getClient} y
+        \texttt{removeClientConnection}. Nadie muta el carnet desde afuera; del
+        mismo modo que \texttt{getSenior} devuelve copias.
+  \item \textbf{Responsabilidad única}: se separa del \texttt{server.ts} para que
+        el servidor solo \emph{orqueste} y no acumule estado (evita un archivo
+        ``que hace de todo'').
+\end{itemize}
+
+\subsubsection{Separación de responsabilidades en el Paso 4}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{4cm}p{5cm}p{4.4cm}@{}}
+    \toprule
+    \textbf{Módulo} & \textbf{Posee} & \textbf{Responde a} \\
+    \midrule
+    \texttt{connection-store.ts} & Map \texttt{clients} (socket $\rightarrow$ ClientInfo) & ¿Quién es este socket? \\
+    \texttt{room-manager.ts} & Map \texttt{rooms} (projectId $\rightarrow$ Room) & ¿Quién es el senior/junior de esta sala? \\
+    \texttt{server.ts} (futuro) & Flujo: wss + \texttt{message} + dispatcher & ¿A qué handler enrutar? \\
+    \bottomrule
+  \end{tabular}
+  \caption{Dos carnets distintos, dos dueños distintos.}
+\end{table}
+
 \section{Conceptos clave aprendidos}
 
 \begin{description}
@@ -412,7 +558,72 @@ Cada contenedor se vacía con su herramienta correcta:
         (el último apaga la luz).
   \item[Snapshot copy] \texttt{getSenior}/\texttt{getJuniors} devuelven copias
         (\texttt{\{ ...x \}}), no referencias internas: se puede leer, no mutar.
+  \item[Type assertion (\texttt{as})] \texttt{JSON.parse} devuelve \texttt{unknown}.
+        \texttt{parsed as JsonRpcRequest} es una ``confianza'' que le damos a
+        TypeScript para poder leer \texttt{.method}/\texttt{.params}; \textbf{no
+        valida en runtime}.
+  \item[El socket = identidad + destino] Cada cliente tiene UN socket: es el
+        canal para responderle (\texttt{socket.send}) y la llave para saber quién
+        es (\texttt{getClient(socket)}). Por eso ``siempre'' aparece.
+  \item[El dispatcher] ``Recepcionista'': un único punto de entrada que lee
+        \texttt{jsonRpc.method} y enruta a cada handler con un \texttt{switch}.
+  \item[El generic tipa el contenido, no el proyecto] \texttt{JsonRpcRequest<T>}
+        sirve para leer los \texttt{params} del mensaje; el \texttt{projectId}
+        del routing sale del carnet (\texttt{getClient}), no de los params.
+  \item[Guardianía del estado] El dueño de un Map expone funciones
+        (\texttt{registerClient}/\texttt{getClient}) en lugar de dejar tocar el
+        Map directo; del mismo modo que \texttt{getSenior} vuelve copias.
 \end{description}
+
+\section{Resumen de los ``porqués'' (para no perder la sintonía)}
+
+Resumen comprimido de las decisiones y su razonamiento, para retomar el hilo
+rápido en la próxima sesión.
+
+\subsection{Por qué un \texttt{Map} de \texttt{clients}}
+Para saber \emph{quién es} cada socket. No basta con guardar sockets sueltos:
+se guarda la relación \texttt{socket $\rightarrow$ ClientInfo} (que trae
+\texttt{projectId} y \texttt{role}). Responde a ``¿de qué junior viene este
+mensaje?''.
+
+\subsection{Por qué \texttt{server.ts} no guarda el carnet; \texttt{connection-store} sí}
+Para no crear un ``archivo que hace de todo''. \texttt{server.ts} solo
+orquesta (crea el wss, escucha, enruta); \texttt{connection-store.ts} es el
+dueño exclusivo del carnet de conexiones. Una responsabilidad por módulo.
+
+\subsection{Por qué \texttt{getClient} y no ``reusar'' \texttt{getSenior}}
+Son carnets \textbf{distintos}:
+\begin{itemize}
+  \item \texttt{getSenior}/\texttt{getJuniors} le preguntan al Map
+        \texttt{rooms} (por \emph{sala}/\texttt{projectId}).
+  \item \texttt{getClient} le pregunta al Map \texttt{clients} (por
+        \emph{conexión}/\texttt{socket}).
+\end{itemize}
+Cuando llega un \texttt{request-approval}, lo \'unico que se tiene es el
+socket; \texttt{getClient} es el puente para obtener el \texttt{projectId} y,
+\emph{después}, poder usar \texttt{getSenior(projectId)}.
+
+\subsection{Por qué tipar \texttt{DestructiveToolParams} si no tiene \texttt{projectId}}
+El generic tipa el \emph{contenido} del mensaje (\texttt{toolName},
+\texttt{arguments}, \texttt{diff}, \texttt{prompt}). El \texttt{projectId} sale
+\textbf{por separado} del carnet (\texttt{getClient(socket)}), no de los
+params. Son dos canales de información distintos.
+
+\subsection{Por qué el \texttt{as JsonRpcRequest} en \texttt{dispatch}}
+\texttt{JSON.parse} devuelve \texttt{unknown}; \texttt{as} es una afirmación de
+tipo para leer \texttt{.method} y \texttt{.params}. Es compile-time, no valida
+en runtime; por eso se combina con el \texttt{try/catch} del parse.
+
+\subsection{Por qué \texttt{dispatch} necesita \texttt{jsonRpc}}
+Para leer \texttt{jsonRpc.method} (decide a qué handler va) y para entregarle
+ese mismo mensaje al handler (que lee sus \texttt{params}). Es el sobre con la
+carta: el recepcionista mira el remitente para clasificar y entrega el mismo
+sobre a la oficina.
+
+\subsection{Por qué ``siempre'' aparece el \texttt{socket}}
+Es a la vez el \textbf{destino} (a quién responder: \texttt{sendError(socket)})
+y la \textbf{identidad} (de quién viene: \texttt{getClient(socket)}). Es el
+único vínculo entre el servidor y cada cliente, por eso viaja en todo el flujo.
 
 \section{Hallazgos y correcciones}
 \label{sec:hallazgos}
@@ -445,19 +656,20 @@ tarjeta (casilla vs.\ colección). Aplicar y volver a compilar:
 \section{Próximos pasos}
 
 \begin{enumerate}
-  \item \textbf{Paso 4 --- Handlers:} el registro cobra vida.
-        \begin{itemize}
-          \item Handler del junior: genera el \texttt{approvalId}, registra al
-                junior (\texttt{joinRoom}), deja la petición
-                (\texttt{requestApproval}) y avisa al senior de la sala
-                (\texttt{getSenior}).
-          \item Handler del senior: toma la petición (\texttt{takeApproval}),
-                genera la \texttt{ApprovalDecision} y la devuelve al junior
-                originador (el \texttt{requester}).
-        \end{itemize}
-  \item \textbf{Paso 5 --- Servidor WebSocket:} \texttt{server.ts} +
-        \texttt{ws.d.ts} (tipos para eventos de \texttt{ws}).
-  \item \textbf{Paso 6 --- Punto de entrada:} \texttt{index.ts} + build final.
+  \item \textbf{Terminar el handler \texttt{request-approval.ts}:} llenar el cuerpo
+        usando \texttt{requestApproval} (guardar petición pendiente),
+        \texttt{getSenior} (ubicar al senior de la sala) y enviarle la petición
+        por su socket; si no hay senior, responder \texttt{sendError}.
+  \item \textbf{Conectar \texttt{register-session.ts}:} que al construir el
+        \texttt{ClientInfo} llame a \texttt{registerClient} para llenar el
+        carnet de conexiones (sin esto, cualquier \texttt{request-approval}
+        devolvería ``Not registered'').
+  \item \textbf{Crear el servidor WebSocket (\texttt{server.ts}):} instancia el
+        \texttt{WebSocketServer}, escucha \texttt{connection}/\texttt{message}/\texttt{close},
+        y enruta por \texttt{jsonRpc.method} con un \texttt{switch} (el
+        \emph{dispatcher}) hacia los handlers. Uso de \texttt{getClient} para
+        obtener el \texttt{projectId} del remitente en \texttt{request-approval}.
+  \item \textbf{Punto de entrada:} \texttt{index.ts} + build final.
 \end{enumerate}
 
 \section{Bitácora de cambios}
@@ -470,6 +682,10 @@ Registro de avances. Agregar una fila por cada cambio significativo.
     \toprule
     \textbf{Fecha} & \textbf{Commit} & \textbf{Descripción} \\
     \midrule
+    2026-09-02 & --- & \texttt{connection-store.ts} creado; \texttt{handlers}:
+                  \texttt{register-session.ts} completo y
+                  \texttt{request-approval.ts} con firma. Diseño del
+                  \texttt{server.ts} (wss + dispatcher) acordado.
     2026-08-23 & \texttt{561a96e} & \texttt{removeClient}, \texttt{getSenior},
                   \texttt{getJuniors}, \texttt{requestApproval},
                   \texttt{takeApproval} \\

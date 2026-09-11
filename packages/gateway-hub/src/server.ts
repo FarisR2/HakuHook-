@@ -6,6 +6,7 @@ import { getClient, removeClientConnection } from "./connection-store.js";
 import { removeClient } from "./room-manager.js";
 import { handlerSession } from "./handlers/register-session.js";
 import { handlerRequestApproval } from "./handlers/request-approval.js";
+import { handlerResolveApproval } from "./handlers/resolve-approval.js";
 
 
 
@@ -47,6 +48,16 @@ function dispatch(jsonRpc: JsonRpcRequest, socket: WebSocket): void {
         return;
       }
       handlerRequestApproval(jsonRpc, client);
+      return;
+    }
+
+    case "scope/resolveApproval": {
+      const client = getClient(socket);
+      if (!client) {
+        sendError(socket, jsonRpc.id!, -32600, "Not registered");
+        return;
+      }
+      handlerResolveApproval(jsonRpc, client);
       return;
     }
     default:

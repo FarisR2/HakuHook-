@@ -1,0 +1,14 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "hakuhook": {
+      "type": "local",
+      "command": ["node", "/home/haku/hakuhook/packages/proxy-mcp/dist/index.js"],
+      "enabled": false,
+      "environment": {
+        "HAKUHOOK_HUB_URL": "ws://localhost:8080",
+        "HAKUHOOK_PROJECT": "hakuhook"
+      }
+    }
+  }
+}

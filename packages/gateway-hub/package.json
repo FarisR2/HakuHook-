@@ -11,8 +11,8 @@
     }
   },
   "scripts": {
-    "build": "esc",
-    "dev": "node --watch --loader ts-node/escm src/server.ts",
+    "build": "tsc",
+    "dev": "node --watch --loader ts-node/esm src/server.ts",
     "start": "node dist/server.js"
   },
   "dependencies": {

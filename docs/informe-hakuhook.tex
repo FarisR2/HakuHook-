@@ -1,0 +1,702 @@
+% ============================================================================
+%  HakuHook — Informe de desarrollo del Gateway Hub
+%  Documento vivo: se actualiza conforme avanza el proyecto.
+%  Compilar con: pdflatex informe-hakuhook.tex
+% ============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+% ---------- Colores ----------
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{codeframe}{RGB}{210,210,210}
+\definecolor{kw}{RGB}{0,80,160}
+\definecolor{typekw}{RGB}{140,60,20}
+\definecolor{cmt}{RGB}{90,120,90}
+\definecolor{str}{RGB}{170,60,60}
+
+% ---------- Lenguaje TypeScript para listings ----------
+\lstdefinelanguage{TypeScript}{
+  keywords={const,let,var,function,return,if,else,throw,new,for,of,in,import,from,export,type,interface,class,extends,implements,void,true,false,null},
+  keywordstyle=\color{kw}\bfseries,
+  ndkeywords={Map,Set,WebSocket,ClientInfo,Room,PendingApproval,JsonRpcResponse,JsonRpcError,ClientRole},
+  ndkeywordstyle=\color{typekw}\bfseries,
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstset{
+  language=TypeScript,
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{cmt}\itshape,
+  stringstyle=\color{str},
+  tabsize=2,
+  captionpos=b,
+  aboveskip=0.8em,
+  belowskip=0.8em
+}
+
+% ---------- Encabezado / pie ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{HakuHook --- Informe de desarrollo}
+\fancyhead[R]{gateway-hub}
+\fancyfoot[C]{\thepage}
+
+\title{\textbf{HakuHook --- Informe de desarrollo}\\ \large Gateway Hub: WebSocket relay HITL}
+\author{Haku}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% ===========================================================================
+\section{Introducción y visión del producto}
+% ===========================================================================
+
+HakuHook es un sistema de \textbf{guardrails y arbitraje multi-agente en tiempo
+real} (\textbf{HITL}, \emph{human in the loop}) cuyo objetivo es prevenir el
+\emph{scope creep} y la degradación arquitectónica cuando desarrolladores junior
+usan agentes de IA (Antigravity, Cursor, Claude Code) en proyectos corporativos.
+
+El flujo general es:
+
+\begin{enumerate}
+  \item Un hook transparente intercepta \textbf{exclusivamente} tool calls
+        destructivos o de alto impacto (\texttt{write\_file},
+        \texttt{create\_file}, \texttt{execute\_command}, migraciones de base de datos).
+  \item Retiene la promesa de ejecución y envía el contexto
+        (prompt del junior + tool call + diff propuesto) al entorno del
+        \textbf{Tech Lead / Senior}.
+  \item En la máquina del senior, un \textbf{LLM evaluador} integrado con
+        Gentle-AI / RDD / skills arquitectónicas analiza el impacto y presenta
+        un veredicto estructurado: \texttt{[Aprobar]},
+        \texttt{[Rechazar con feedback pedagógico]}, \texttt{[Modificar]}.
+\end{enumerate}
+
+El modelo de roles es asimétrico por diseño:
+
+\begin{itemize}
+  \item \textbf{Junior}: el agente de IA que \emph{propone} y \emph{pide permiso}
+        para ejecutar acciones destructivas.
+  \item \textbf{Senior}: el humano (HITL) que \emph{arbitra}: revisa el contexto
+        y \emph{decide} aprobar, rechazar o modificar.
+\end{itemize}
+
+\section{Arquitectura del monorepo}
+
+Monorepo TypeScript con pnpm workspaces bajo el scope \texttt{@hakuhook/*}.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{3.2cm}p{7.5cm}p{2.8cm}@{}}
+    \toprule
+    \textbf{Paquete} & \textbf{Rol} & \textbf{Estado} \\
+    \midrule
+    \texttt{shared} & Tipos comunes, interfaces de sesión,
+                      contratos JSON-RPC 2.0 & Completado \\
+    \texttt{gateway-hub} & Servidor WebSocket relay; salas por \texttt{projectId};
+                           sincroniza peticiones junior $\leftrightarrow$ senior
+                           en tiempo real & \textbf{En desarrollo} \\
+    \texttt{proxy-mcp} & Interceptor STDIO para MCP; filtra llamadas y se
+                         comunica vía WebSocket con el hub & Pendiente \\
+    \texttt{evaluator} & Motor de arbitraje del senior; evalúa diff con LLM;
+                         UI interactiva en terminal & Pendiente \\
+    \texttt{cli} & Binario global (\texttt{hakuhook init}, \texttt{hakuhook login});
+                   aislamiento por repositorio & Pendiente \\
+    \bottomrule
+  \end{tabular}
+  \caption{Paquetes del monorepo y su estado.}
+\end{table}
+
+\section{Estado del roadmap}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{1.6cm}p{5.2cm}p{3cm}p{3.4cm}@{}}
+    \toprule
+    \textbf{Paso} & \textbf{Contenido} & \textbf{Estado} & \textbf{Evidencia} \\
+    \midrule
+    1 & Tipos base (\texttt{types.ts}) & Completado & Commit \texttt{2c8054a} \\
+    2 & Utilidades JSON-RPC (\texttt{json-rpc.ts}) & Completado & Commit \texttt{2c8054a} \\
+    3 & Registro de salas (\texttt{room-manager.ts}) & Completado & Commits \texttt{93bf9a5}, \texttt{561a96e} \\
+    4 & Handlers (routing junior $\rightarrow$ senior) & En desarrollo &
+           \texttt{register-session.ts} completo; \texttt{request-approval.ts}
+           con firma, cuerpo pendiente \\
+    5 & Carnet de conexiones (\texttt{connection-store.ts}) & Completado & Sesión 2026-09-02 \\
+    6 & Servidor WebSocket + dispatcher (\texttt{server.ts}) & Pendiente & --- \\
+    7 & Punto de entrada (\texttt{index.ts}) + build & Pendiente & --- \\
+    \bottomrule
+  \end{tabular}
+  \caption{Roadmap de implementación del gateway-hub.}
+\end{table}
+
+El build actual pasa correctamente: \texttt{pnpm build} (TypeScript compila sin errores).
+
+\section{Detalle paso a paso}
+
+\subsection{Paso 1: Tipos base}
+
+Define la ``tarjeta'' de cada participante, la sala y las peticiones pendientes.
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/types.ts]
+import type { WebSocket } from "ws";
+import type { ClientRole } from "@hakuhook/shared";
+
+export interface ClientInfo {
+  socket: WebSocket;
+  projectId: string;
+  role: ClientRole;
+}
+
+export interface Room {
+  projectId: string;
+  senior: ClientInfo | null;
+  juniors: Set<ClientInfo>
+}
+
+export interface PendingApproval {
+  projectId: string;
+  requester: ClientInfo;
+}
+\end{lstlisting}
+
+Tipos compartidos relevantes (definen el contrato de negocio):
+
+\begin{lstlisting}[caption=packages/shared/src/types.ts (extracto)]
+export type ClientRole = "junior" | "senior";
+
+export interface ApprovalDecision {
+  requestId: string | number;
+  status: "approved" | "rejected" | "modified";
+  feedback?: string;
+  modifiedArguments?: Record<string, any>;
+}
+\end{lstlisting}
+
+\begin{itemize}
+  \item \texttt{ClientInfo} es la tarjeta: conexión, sala a la que pertenece y rol.
+  \item \texttt{Room} modela la asimetría: una casilla única de senior
+        (\texttt{ClientInfo | null}) y una colección de juniors (\texttt{Set}).
+  \item \texttt{PendingApproval} no lleva \texttt{id}: la llave (el
+        \texttt{approvalId}) se genera en los handlers (Paso 4).
+\end{itemize}
+
+\subsection{Paso 2: Utilidades JSON-RPC}
+
+Helpers para enviar respuestas y errores por el socket según el contrato JSON-RPC 2.0.
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/json-rpc.ts]
+import type { WebSocket } from "ws";
+import type { JsonRpcError, JsonRpcResponse } from "@hakuhook/shared";
+
+export function send(socket: WebSocket, message: unknown): void {
+  socket.send(JSON.stringify(message))
+}
+
+export function sendResult(
+  socket: WebSocket,
+  id: string | number,
+  result: unknown,
+): void {
+  const response: JsonRpcResponse = { jsonrpc: "2.0", id, result };
+  send(socket, response);
+}
+
+export function sendError(
+  socket: WebSocket,
+  id: string | number,
+  code: number,
+  message: string,
+): void {
+  const error: JsonRpcError = { code, message };
+  const response: JsonRpcResponse = { jsonrpc: "2.0", id, error };
+  send(socket, response);
+}
+\end{lstlisting}
+
+\subsection{Paso 3: Room manager}
+
+El \texttt{room-manager} es un \textbf{registro pasivo}: sabe quién está en cada
+sala, pero no envía mensajes. Los handlers (Paso 4) lo consultan para enrutar.
+
+Diseño: módulo-singleton con dos contenedores a nivel de módulo:
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/room-manager.ts (vista corregida)]
+import type { ClientInfo, PendingApproval, Room } from "./types.js";
+
+const rooms = new Map<string, Room>();
+const approvals = new Map<string, PendingApproval>()
+
+export function joinRoom(client: ClientInfo): Room {
+  let room = rooms.get(client.projectId)
+
+  if (client.role == "senior" && room?.senior) {
+    throw new Error(
+      `Project "${client.projectId}" already has an active senior`,
+    )
+  }
+
+  if (!room) {
+    room = {
+      projectId: client.projectId,
+      senior: null,
+      juniors: new Set(),
+    }
+    rooms.set(client.projectId, room)
+  }
+
+  if (client.role == "senior") {
+    room.senior = client
+  } else {
+    room.juniors.add(client)
+  }
+
+  return room
+}
+
+export function removeClient(client: ClientInfo): void {
+  const room = rooms.get(client.projectId)
+  if (!room) return
+
+  // Capa 1: quitar de la sala segun su contenedor
+  if (client.role == "senior") {
+    if (room.senior === client) {
+      room.senior = null
+    }
+  } else {
+    room.juniors.delete(client)
+  }
+
+  // Capa 2: purgar aprobaciones fantasma (aplica a cualquier rol)
+  for (const [approvalId, approval] of approvals) {
+    if (approval.requester === client) {
+      approvals.delete(approvalId)
+    }
+  }
+
+  // Capa 3: GC de sala vacia (aplica a cualquier rol)
+  if (!room.senior && room.juniors.size === 0) {
+    rooms.delete(client.projectId)
+  }
+}
+
+export function getSenior(projectId: string): ClientInfo | null {
+  const senior = rooms.get(projectId)?.senior
+  if (!senior) return null
+  return { ...senior }
+}
+
+export function getJuniors(projectId: string): ClientInfo[] {
+  const room = rooms.get(projectId)
+  if (!room) return []
+  return [...room.juniors].map((junior) => ({ ...junior }))
+}
+
+export function requestApproval(approvalId: string, client: ClientInfo): PendingApproval {
+  const approval: PendingApproval = {
+    projectId: client.projectId,
+    requester: client,
+  }
+  approvals.set(approvalId, approval)
+  return approval
+}
+
+export function takeApproval(approvalId: string): PendingApproval | null {
+  const approval = approvals.get(approvalId)
+  if (!approval) return null
+  approvals.delete(approvalId)
+  return approval
+}
+\end{lstlisting}
+
+\textbf{Nota:} la versión mostrada incluye la corrección documentada en la
+Sección~\ref{sec:hallazgos}. El código \emph{commiteado} en el repositorio aún
+tiene el error pendiente de aplicar.
+
+\subsubsection{Las tres capas de \texttt{removeClient}}
+
+\begin{itemize}
+  \item \textbf{Capa 1 (detach):} quitar la tarjeta según su contenedor.
+        El junior se borra de la colección (\texttt{Set.delete}); la casilla del
+        senior se vacía asignando \texttt{null}.
+  \item \textbf{Capa 2 (fantasmas):} las peticiones pendientes del que se va se
+        eliminan de la bandeja. La llave de \texttt{approvals} es el
+        \texttt{approvalId} (no la persona), por lo que hay que barrer todas
+        las entradas con un \texttt{for} y comparar por identidad.
+  \item \textbf{Capa 3 (GC):} si la sala quedó sin senior y sin juniors, se
+        elimina del registro. La cierra \emph{el último que sale},
+        independientemente del rol.
+\end{itemize}
+
+\subsubsection{Mecanismos de almacenamiento}
+
+Cada contenedor se vacía con su herramienta correcta:
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{3.6cm}p{4.4cm}p{5cm}@{}}
+    \toprule
+    \textbf{Contenedor} & \textbf{Qué es} & \textbf{Cómo se vacía} \\
+    \midrule
+    \texttt{room.senior} & Casilla única (propiedad) & \texttt{room.senior = null} \\
+    \texttt{room.juniors} & Colección (\texttt{Set}) & \texttt{room.juniors.delete(client)} \\
+    \texttt{rooms} / \texttt{approvals} & Cajonera (\texttt{Map}) & \texttt{<map>.delete(llave)} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Formas de quitar elementos según el contenedor.}
+\end{table}
+
+\subsubsection{Asimetría senior vs.\ junior}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{3.2cm}p{5.4cm}p{5.4cm}@{}}
+    \toprule
+    & \textbf{Junior} & \textbf{Senior} \\
+    \midrule
+    Qué es & Agente de IA del dev & Tech Lead humano (HITL) \\
+    Qué hace & Pide permiso (\texttt{requestApproval}, es el \texttt{requester}) &
+               Toma el permiso (\texttt{takeApproval}) y decide
+               (\texttt{ApprovalDecision}) \\
+    Cantidad por sala & Muchos (\texttt{Set}) & Uno (casilla única) \\
+    Regla especial & --- & Máximo un senior por sala (lanza error) \\
+    \bottomrule
+  \end{tabular}
+  \caption{El junior propone; el senior arbitra.}
+\end{table}
+
+\subsection{Paso 4: Handlers -- el routing junior $\rightarrow$ senior}
+
+En este paso el registro ``cobra vida'': los clientes, una vez en su sala,
+empiezan a \emph{pedir permiso}. Los handlers reciben el mensaje JSON-RPC ya
+enrutado y lo convierten en acciones sobre las salas y las peticiones.
+
+\subsubsection{El handler de registro (\texttt{register-session.ts})}
+
+Su trabajo es \textbf{asociar una conexión a una sala y a un rol}. Es el
+\emph{único} lugar donde el servidor aprende ``quién es'' cada socket.
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/handlers/register-session.ts]
+import type { JsonRpcRequest, RegisterSessionParams } from "@hakuhook/shared";
+import type { WebSocket } from "ws";
+import type { ClientInfo } from "../types.js";
+import { joinRoom } from "../room-manager.js"
+import { sendError, sendResult } from "../json-rpc.js";
+
+export function handlerSession(
+  jsonRpc: JsonRpcRequest<RegisterSessionParams>,
+  socket: WebSocket
+): void {
+  const { projectId, role } = jsonRpc.params;
+
+  if (role !== "junior" && role !== "senior") {
+    sendError(socket, jsonRpc.id!, -32602, `Invalid role: "${role}"`);
+    return;
+  }
+
+  const client: ClientInfo = { socket, projectId, role };
+
+  try {
+    const room = joinRoom(client);
+    sendResult(socket, jsonRpc.id!, { projectId: room.projectId, role });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    sendError(socket, jsonRpc.id!, -32000, message)
+  }
+}
+\end{lstlisting}
+
+Puntos clave de su lógica:
+
+\begin{itemize}
+  \item \textbf{Generic \texttt{RegisterSessionParams}}: le dice a TypeScript que
+        los \texttt{params} del mensaje traen \texttt{projectId} y \texttt{role};
+        sin el generic, \texttt{jsonRpc.params} sería \texttt{unknown} y no se
+        podría leer \texttt{params.projectId}.
+  \item \textbf{Validar antes de mutar}: se valida el \texttt{role} con
+        \texttt{sendError(-32602)} \emph{antes} de tocar el estado. El error
+        JSON-RPC \texttt{-32602} es ``Invalid params''.
+  \item \textbf{\texttt{try/catch}:} el único riesgo real es \texttt{joinRoom}
+        (que lanza si la sala ya tiene senior). Si falla, se responde
+        \texttt{sendError(-32000)} (error de negocio/servidor), y el cambio no
+        se aplica.
+  \item \textbf{Non-null assertion \texttt{id!}}: \texttt{id} es opcional en el
+        contrato, pero acá se necesita sí o sí para responder; el \texttt{!}
+        ``confirma'' a TypeScript que existe.
+\end{itemize}
+
+\textbf{Pendiente de conectar:} este handler aún \emph{no} llama a
+\texttt{registerClient} cuando construye el \texttt{ClientInfo}; sin ese cable,
+el carnet de conexiones nunca se llena y todo \texttt{request-approval}
+devolvería ``Not registered''.
+
+\subsubsection{El handler de petición (\texttt{request-approval.ts})}
+
+Por ahora solo tiene la \textbf{firma} escrita; el cuerpo está vacío. La firma
+ya marca una decisión clave de diseño:
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/handlers/request-approval.ts (esqueleto)]
+import type { JsonRpcRequest, DestructiveToolParams } from "@hakuhook/shared";
+import type { WebSocket } from "ws";
+
+export function handlerRequestApproval(
+  jsonRpc: JsonRpcRequest<DestructiveToolParams>,
+  socket: WebSocket
+): void {
+
+}
+\end{lstlisting}
+
+\textbf{¿Para qué se tipa con \texttt{DestructiveToolParams}?} Para leer el
+\emph{contenido} de la petición (\texttt{toolName}, \texttt{arguments},
+\texttt{diff}, \texttt{prompt}). Es importante notar que este tipo \textbf{no
+trae \texttt{projectId}}: el \texttt{projectId} se obtiene del carnet de
+conexiones mediante \texttt{getClient(socket)}, nunca de los \texttt{params}.
+
+\subsubsection{El carnet de conexiones (\texttt{connection-store.ts})}
+
+Nuevo módulo que resuelve la pregunta \emph{``¿quién es el dueño de este
+socket?''}. Es el ``carnet de identidad por conexión''.
+
+\begin{lstlisting}[caption=packages/gateway-hub/src/connection-store.ts]
+import type { WebSocket } from "ws";
+import type { ClientInfo } from "./types.js";
+
+const clients = new Map<WebSocket, ClientInfo>();
+
+export function registerClient(client: ClientInfo): void {
+  clients.set(client.socket, client);
+}
+
+export function getClient(socket: WebSocket): ClientInfo | undefined {
+  return clients.get(socket);
+}
+
+export function removeClientConnection(socket: WebSocket): void {
+  clients.delete(socket);
+}
+\end{lstlisting}
+
+Puntos clave:
+
+\begin{itemize}
+  \item \textbf{Map privado por conexión}: \texttt{Map<WebSocket, ClientInfo>}
+        relaciona cada socket con su tarjeta (que incluye el \texttt{projectId}).
+        Es un carnet distinto del \texttt{rooms} (que es por \emph{sala}).
+  \item \textbf{Guardianía}: \texttt{clients} es privado; se expone solo
+        \texttt{registerClient}, \texttt{getClient} y
+        \texttt{removeClientConnection}. Nadie muta el carnet desde afuera; del
+        mismo modo que \texttt{getSenior} devuelve copias.
+  \item \textbf{Responsabilidad única}: se separa del \texttt{server.ts} para que
+        el servidor solo \emph{orqueste} y no acumule estado (evita un archivo
+        ``que hace de todo'').
+\end{itemize}
+
+\subsubsection{Separación de responsabilidades en el Paso 4}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{4cm}p{5cm}p{4.4cm}@{}}
+    \toprule
+    \textbf{Módulo} & \textbf{Posee} & \textbf{Responde a} \\
+    \midrule
+    \texttt{connection-store.ts} & Map \texttt{clients} (socket $\rightarrow$ ClientInfo) & ¿Quién es este socket? \\
+    \texttt{room-manager.ts} & Map \texttt{rooms} (projectId $\rightarrow$ Room) & ¿Quién es el senior/junior de esta sala? \\
+    \texttt{server.ts} (futuro) & Flujo: wss + \texttt{message} + dispatcher & ¿A qué handler enrutar? \\
+    \bottomrule
+  \end{tabular}
+  \caption{Dos carnets distintos, dos dueños distintos.}
+\end{table}
+
+\section{Conceptos clave aprendidos}
+
+\begin{description}
+  \item[Map y sus métodos] Un \texttt{Map} es una cajonera: \texttt{get(llave)}
+        abre un cajón (o devuelve \texttt{undefined}), \texttt{set} guarda,
+        \texttt{delete} quita entrada por llave.
+  \item[Tipos genéricos] \texttt{Map<string, Room>} se lee ``cajonera con
+        etiquetas string que guarda Rooms'': primer parámetro = tipo de llave,
+        segundo = tipo de valor.
+  \item[Identidad por referencia] \texttt{===} entre objetos compara la
+        dirección de memoria, no el contenido. Dos tarjetas que se ven iguales
+        son dos objetos distintos. Es la base de \texttt{Set.delete} y de
+        \texttt{room.senior === client}.
+  \item[Casilla única vs.\ colección] El senior vive en una casilla
+        (\texttt{ClientInfo | null}); los juniors en una colección. Por eso se
+        vacían distinto.
+  \item[Checkout semántico] \texttt{takeApproval} \emph{saca} la petición de la
+        bandeja: al tomarla, nadie más puede tomarla. Tomar = sacar.
+  \item[Validar antes de mutar] Comprobar invariantes (ej.\ un solo senior)
+        antes de modificar el estado.
+  \item[Lazy init] Crear la sala solo cuando llega la primera persona; no
+        pre-crear nada.
+  \item[GC de sala vacía] Borrar del registro la sala que se queda sin nadie
+        (el último apaga la luz).
+  \item[Snapshot copy] \texttt{getSenior}/\texttt{getJuniors} devuelven copias
+        (\texttt{\{ ...x \}}), no referencias internas: se puede leer, no mutar.
+  \item[Type assertion (\texttt{as})] \texttt{JSON.parse} devuelve \texttt{unknown}.
+        \texttt{parsed as JsonRpcRequest} es una ``confianza'' que le damos a
+        TypeScript para poder leer \texttt{.method}/\texttt{.params}; \textbf{no
+        valida en runtime}.
+  \item[El socket = identidad + destino] Cada cliente tiene UN socket: es el
+        canal para responderle (\texttt{socket.send}) y la llave para saber quién
+        es (\texttt{getClient(socket)}). Por eso ``siempre'' aparece.
+  \item[El dispatcher] ``Recepcionista'': un único punto de entrada que lee
+        \texttt{jsonRpc.method} y enruta a cada handler con un \texttt{switch}.
+  \item[El generic tipa el contenido, no el proyecto] \texttt{JsonRpcRequest<T>}
+        sirve para leer los \texttt{params} del mensaje; el \texttt{projectId}
+        del routing sale del carnet (\texttt{getClient}), no de los params.
+  \item[Guardianía del estado] El dueño de un Map expone funciones
+        (\texttt{registerClient}/\texttt{getClient}) en lugar de dejar tocar el
+        Map directo; del mismo modo que \texttt{getSenior} vuelve copias.
+\end{description}
+
+\section{Resumen de los ``porqués'' (para no perder la sintonía)}
+
+Resumen comprimido de las decisiones y su razonamiento, para retomar el hilo
+rápido en la próxima sesión.
+
+\subsection{Por qué un \texttt{Map} de \texttt{clients}}
+Para saber \emph{quién es} cada socket. No basta con guardar sockets sueltos:
+se guarda la relación \texttt{socket $\rightarrow$ ClientInfo} (que trae
+\texttt{projectId} y \texttt{role}). Responde a ``¿de qué junior viene este
+mensaje?''.
+
+\subsection{Por qué \texttt{server.ts} no guarda el carnet; \texttt{connection-store} sí}
+Para no crear un ``archivo que hace de todo''. \texttt{server.ts} solo
+orquesta (crea el wss, escucha, enruta); \texttt{connection-store.ts} es el
+dueño exclusivo del carnet de conexiones. Una responsabilidad por módulo.
+
+\subsection{Por qué \texttt{getClient} y no ``reusar'' \texttt{getSenior}}
+Son carnets \textbf{distintos}:
+\begin{itemize}
+  \item \texttt{getSenior}/\texttt{getJuniors} le preguntan al Map
+        \texttt{rooms} (por \emph{sala}/\texttt{projectId}).
+  \item \texttt{getClient} le pregunta al Map \texttt{clients} (por
+        \emph{conexión}/\texttt{socket}).
+\end{itemize}
+Cuando llega un \texttt{request-approval}, lo \'unico que se tiene es el
+socket; \texttt{getClient} es el puente para obtener el \texttt{projectId} y,
+\emph{después}, poder usar \texttt{getSenior(projectId)}.
+
+\subsection{Por qué tipar \texttt{DestructiveToolParams} si no tiene \texttt{projectId}}
+El generic tipa el \emph{contenido} del mensaje (\texttt{toolName},
+\texttt{arguments}, \texttt{diff}, \texttt{prompt}). El \texttt{projectId} sale
+\textbf{por separado} del carnet (\texttt{getClient(socket)}), no de los
+params. Son dos canales de información distintos.
+
+\subsection{Por qué el \texttt{as JsonRpcRequest} en \texttt{dispatch}}
+\texttt{JSON.parse} devuelve \texttt{unknown}; \texttt{as} es una afirmación de
+tipo para leer \texttt{.method} y \texttt{.params}. Es compile-time, no valida
+en runtime; por eso se combina con el \texttt{try/catch} del parse.
+
+\subsection{Por qué \texttt{dispatch} necesita \texttt{jsonRpc}}
+Para leer \texttt{jsonRpc.method} (decide a qué handler va) y para entregarle
+ese mismo mensaje al handler (que lee sus \texttt{params}). Es el sobre con la
+carta: el recepcionista mira el remitente para clasificar y entrega el mismo
+sobre a la oficina.
+
+\subsection{Por qué ``siempre'' aparece el \texttt{socket}}
+Es a la vez el \textbf{destino} (a quién responder: \texttt{sendError(socket)})
+y la \textbf{identidad} (de quién viene: \texttt{getClient(socket)}). Es el
+único vínculo entre el servidor y cada cliente, por eso viaja en todo el flujo.
+
+\section{Hallazgos y correcciones}
+\label{sec:hallazgos}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{2.4cm}p{6.4cm}p{2.4cm}p{2.6cm}@{}}
+    \toprule
+    \textbf{Fecha} & \textbf{Hallazgo} & \textbf{Impacto} & \textbf{Estado} \\
+    \midrule
+    2026-08-30 & \texttt{removeClient}: toda la limpieza quedó anidada dentro
+                 de \texttt{if (client.role == "senior")}. Consecuencias:
+                 (1) un junior que se va NO se elimina de la sala;
+                 (2) sus aprobaciones fantasma no se purgan;
+                 (3) la sala nunca se cierra cuando el último en irse es junior
+                 (no hay GC). & El registro queda con juniors ``fantasma'' y el
+                 relay podría enviar mensajes a sockets muertos. &
+                 Corregido en el informe, pendiente de aplicar en el repo. \\
+    \bottomrule
+  \end{tabular}
+  \caption{Errores detectados durante el desarrollo.}
+\end{table}
+
+La corrección consiste en sacar la limpieza de aprobaciones y el GC \emph{fuerza}
+del bloque \texttt{if (client.role == "senior")}, y dejar el
+\texttt{if/else} de rol únicamente para decidir \emph{cómo} se desengancha la
+tarjeta (casilla vs.\ colección). Aplicar y volver a compilar:
+\texttt{pnpm build}.
+
+\section{Próximos pasos}
+
+\begin{enumerate}
+  \item \textbf{Terminar el handler \texttt{request-approval.ts}:} llenar el cuerpo
+        usando \texttt{requestApproval} (guardar petición pendiente),
+        \texttt{getSenior} (ubicar al senior de la sala) y enviarle la petición
+        por su socket; si no hay senior, responder \texttt{sendError}.
+  \item \textbf{Conectar \texttt{register-session.ts}:} que al construir el
+        \texttt{ClientInfo} llame a \texttt{registerClient} para llenar el
+        carnet de conexiones (sin esto, cualquier \texttt{request-approval}
+        devolvería ``Not registered'').
+  \item \textbf{Crear el servidor WebSocket (\texttt{server.ts}):} instancia el
+        \texttt{WebSocketServer}, escucha \texttt{connection}/\texttt{message}/\texttt{close},
+        y enruta por \texttt{jsonRpc.method} con un \texttt{switch} (el
+        \emph{dispatcher}) hacia los handlers. Uso de \texttt{getClient} para
+        obtener el \texttt{projectId} del remitente en \texttt{request-approval}.
+  \item \textbf{Punto de entrada:} \texttt{index.ts} + build final.
+\end{enumerate}
+
+\section{Bitácora de cambios}
+
+Registro de avances. Agregar una fila por cada cambio significativo.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}p{2.6cm}p{3.2cm}p{7.6cm}@{}}
+    \toprule
+    \textbf{Fecha} & \textbf{Commit} & \textbf{Descripción} \\
+    \midrule
+    2026-09-02 & --- & \texttt{connection-store.ts} creado; \texttt{handlers}:
+                  \texttt{register-session.ts} completo y
+                  \texttt{request-approval.ts} con firma. Diseño del
+                  \texttt{server.ts} (wss + dispatcher) acordado.
+    2026-08-23 & \texttt{561a96e} & \texttt{removeClient}, \texttt{getSenior},
+                  \texttt{getJuniors}, \texttt{requestApproval},
+                  \texttt{takeApproval} \\
+    2026-08-23 & \texttt{93bf9a5} & \texttt{joinRoom} (validar antes de mutar,
+                  lazy init, un solo senior) \\
+    2026-08-20 & \texttt{2c8054a} & Tipos base + utilidades JSON-RPC \\
+    2026-08-20 & \texttt{f75e348} & Ignorar dependencias (\texttt{.gitignore}) \\
+    2026-08-20 & \texttt{7e8aefe} & Tipos del gateway-hub \\
+    \bottomrule
+  \end{tabular}
+  \caption{Bitácora de cambios del gateway-hub.}
+\end{table}
+
+\end{document}

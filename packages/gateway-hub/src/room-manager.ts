@@ -69,10 +69,15 @@ export function getJuniors(projectId: string): ClientInfo[] {
 }
 
 // Pide permiso
-export function requestApproval(approvalId: string, client: ClientInfo): PendingApproval {
+export function requestApproval(
+  approvalId: string,
+  client: ClientInfo,
+  originalRequestId: string | number,
+): PendingApproval {
   const approval: PendingApproval = {
     projectId: client.projectId,
     requester: client,
+    originalRequestId,
   }
   approvals.set(approvalId, approval)
 

@@ -18,4 +18,5 @@ export interface Room {
 export interface PendingApproval {
   projectId: string;
   requester: ClientInfo;
+  originalRequestId: string | number;
 }

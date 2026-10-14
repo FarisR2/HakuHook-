@@ -1,0 +1,69 @@
+{
+  "artifact": "guide.json",
+  "status": "ready",
+  "phase": "generate",
+  "generatedAt": "2026-10-14T04:51:47.358660+00:00",
+  "docType": "flows",
+  "outputFile": "FLOWS.md",
+  "targetPath": "/home/haku/hakuhook",
+  "goal": "Guide the agent to write `FLOWS.md` from grounded `.archify` artifacts.",
+  "primaryArtifacts": [
+    ".archify/docs/flows/packet.json",
+    ".archify/architecture-context.json",
+    ".archify/facts.json",
+    ".archify/modules.json",
+    ".archify/services.json",
+    ".archify/routes.json",
+    ".archify/database.json",
+    ".archify/dependencies.json",
+    ".archify/docs-summary.json"
+  ],
+  "readOrder": [
+    ".archify/docs/flows/packet.json",
+    ".archify/docs/flows/guide.json",
+    ".archify/architecture-context.json",
+    ".archify/facts.json",
+    ".archify/modules.json",
+    ".archify/services.json",
+    ".archify/dependencies.json",
+    ".archify/routes.json",
+    ".archify/database.json",
+    ".archify/docs-summary.json"
+  ],
+  "sectionPlan": [
+    {
+      "section": "Overview",
+      "required": true,
+      "factPolicy": "confirmed_first"
+    },
+    {
+      "section": "Confirmed Flows",
+      "required": true,
+      "factPolicy": "confirmed_only"
+    },
+    {
+      "section": "Inferred Flow Notes",
+      "required": true,
+      "factPolicy": "inferred_must_be_labeled"
+    },
+    {
+      "section": "Open Questions / Uncertainty",
+      "required": true,
+      "factPolicy": "uncertainty_only"
+    }
+  ],
+  "validationChecks": [
+    "Draft and validate `FLOWS.md` section by section using `sectionPlan`.",
+    "Keep confirmed facts, inferred notes, and uncertainty separated."
+  ],
+  "forbiddenBehaviors": [
+    "Do not inspect the whole repository before reading the guide and referenced `.archify` artifacts.",
+    "Do not present inferred items as confirmed.",
+    "Do not write any primary output file other than `FLOWS.md`."
+  ],
+  "draftingWorkflow": [
+    "Read `.archify/docs/flows/packet.json`.",
+    "Read `.archify/docs/flows/guide.json`.",
+    "Draft `FLOWS.md` section by section using `sectionPlan`."
+  ]
+}

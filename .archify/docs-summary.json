@@ -1,0 +1,32 @@
+{
+  "artifact": "docs-summary.json",
+  "status": "ready",
+  "phase": "analyze",
+  "targetPath": "/home/haku/hakuhook",
+  "scanRoot": ".",
+  "semantic": {
+    "enabled": false,
+    "backend": "none",
+    "providerEnrichmentSkipped": true,
+    "message": "Semantic enrichment is disabled. This summary preserves document provenance for downstream synthesis."
+  },
+  "detectedDocs": [],
+  "confirmedFacts": {
+    "processedDocuments": [],
+    "skippedDocuments": [],
+    "readmeLikeDocs": []
+  },
+  "inferredAlignments": {
+    "docToSubsystem": [],
+    "architectureThemes": [],
+    "unresolvedDocuments": []
+  },
+  "summary": {
+    "detectedDocumentCount": 0,
+    "processedDocumentCount": 0,
+    "skippedDocumentCount": 0,
+    "alignedDocumentCount": 0,
+    "themeCount": 0,
+    "unresolvedDocumentCount": 0
+  }
+}

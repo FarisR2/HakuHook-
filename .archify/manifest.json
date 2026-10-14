@@ -1,0 +1,1254 @@
+{
+  "artifact": "manifest.json",
+  "status": "ready",
+  "phase": "analyze",
+  "manifestVersion": 2,
+  "graphArtifactVersion": 2,
+  "generatedAt": "2026-10-14T04:51:39.816758+00:00",
+  "targetPath": "/home/haku/hakuhook",
+  "scanRoot": ".",
+  "semanticEnabled": false,
+  "semanticConfigFingerprint": "{\"detect\":{\"excludeGlobs\":[],\"followSymlinks\":false,\"includeGlobs\":[],\"includeHidden\":false,\"maxFileSizeBytes\":1048576},\"languageScope\":{\"exclude\":[],\"include\":[]},\"semantic\":{\"backend\":\"none\",\"enabled\":false,\"includeExtensions\":[\".md\",\".mdx\",\".txt\",\".rst\"],\"includeFileTypes\":[\"document\"],\"maxChunkBytes\":8192,\"maxChunksPerDocument\":32,\"maxDocumentBytes\":262144,\"mode\":\"docs_first\"},\"sourceRoot\":\".\"}",
+  "mode": "full",
+  "incremental": {
+    "incrementalEligible": false,
+    "new_or_changed_files": [
+      "opencode.json",
+      "openspec/config.yaml",
+      "package.json",
+      "packages/gateway-hub/package.json",
+      "packages/gateway-hub/src/connection-store.ts",
+      "packages/gateway-hub/src/handlers/register-session.ts",
+      "packages/gateway-hub/src/handlers/request-approval.ts",
+      "packages/gateway-hub/src/handlers/resolve-approval.ts",
+      "packages/gateway-hub/src/index.ts",
+      "packages/gateway-hub/src/json-rpc.ts",
+      "packages/gateway-hub/src/room-manager.ts",
+      "packages/gateway-hub/src/server.ts",
+      "packages/gateway-hub/src/types.ts",
+      "packages/gateway-hub/test/flow-test.ts",
+      "packages/gateway-hub/test/junior.ts",
+      "packages/gateway-hub/test/senior.ts",
+      "packages/gateway-hub/test/start-server.ts",
+      "packages/gateway-hub/tsconfig.json",
+      "packages/proxy-mcp/debug-repro.mjs",
+      "packages/proxy-mcp/package.json",
+      "packages/proxy-mcp/src/destructive.ts",
+      "packages/proxy-mcp/src/index.ts",
+      "packages/proxy-mcp/src/mcp-server.ts",
+      "packages/proxy-mcp/test-mcp-e2e.mjs",
+      "packages/proxy-mcp/tsconfig.json",
+      "packages/shared/package.json",
+      "packages/shared/src/index.ts",
+      "packages/shared/src/protocol.ts",
+      "packages/shared/src/types.ts",
+      "packages/shared/tsconfig.json",
+      "pnpm-workspace.yaml",
+      "tsconfig.base.json"
+    ],
+    "unchanged_files": [],
+    "deleted_files": [],
+    "changed_code_files": [
+      "packages/gateway-hub/src/connection-store.ts",
+      "packages/gateway-hub/src/handlers/register-session.ts",
+      "packages/gateway-hub/src/handlers/request-approval.ts",
+      "packages/gateway-hub/src/handlers/resolve-approval.ts",
+      "packages/gateway-hub/src/index.ts",
+      "packages/gateway-hub/src/json-rpc.ts",
+      "packages/gateway-hub/src/room-manager.ts",
+      "packages/gateway-hub/src/server.ts",
+      "packages/gateway-hub/src/types.ts",
+      "packages/gateway-hub/test/flow-test.ts",
+      "packages/gateway-hub/test/junior.ts",
+      "packages/gateway-hub/test/senior.ts",
+      "packages/gateway-hub/test/start-server.ts",
+      "packages/proxy-mcp/debug-repro.mjs",
+      "packages/proxy-mcp/src/destructive.ts",
+      "packages/proxy-mcp/src/index.ts",
+      "packages/proxy-mcp/src/mcp-server.ts",
+      "packages/proxy-mcp/test-mcp-e2e.mjs",
+      "packages/shared/src/index.ts",
+      "packages/shared/src/protocol.ts",
+      "packages/shared/src/types.ts"
+    ],
+    "changed_semantic_files": [],
+    "reused_code_files": [],
+    "reused_semantic_files": [],
+    "changedFileCount": 32,
+    "deletedFileCount": 0,
+    "reusedFileCount": 0,
+    "fallbackReason": "missing_prior_state",
+    "semanticSkipped": false
+  },
+  "staleLockRecovered": null,
+  "graphSummary": {
+    "nodeCount": 203,
+    "edgeCount": 491,
+    "hyperedgeCount": 0,
+    "communityCount": 20,
+    "warningCount": 0
+  },
+  "dedupSummary": {
+    "duplicateNodeCount": 109,
+    "duplicateNodeIdCount": 0,
+    "duplicateEdgeCount": 0,
+    "mergedLabelGroupCount": 57,
+    "mergedLabelGroups": [
+      {
+        "label": "async",
+        "survivor": "ref_packages_gateway_hub_test_senior_ts_call_async",
+        "merged": [
+          "ref_packages_proxy_mcp_src_index_ts_call_async",
+          "ref_packages_proxy_mcp_src_mcp_server_ts_call_async"
+        ]
+      },
+      {
+        "label": "child process",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_import_child_process",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_import_child_process"
+        ]
+      },
+      {
+        "label": "chunk tostring",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_chunk_tostring",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_chunk_tostring"
+        ]
+      },
+      {
+        "label": "connection store js",
+        "survivor": "ref_packages_gateway_hub_src_handlers_register_session_ts_import_connection_store_js",
+        "merged": [
+          "ref_packages_gateway_hub_src_server_ts_import_connection_store_js"
+        ]
+      },
+      {
+        "label": "console error",
+        "survivor": "ref_packages_gateway_hub_test_flow_test_ts_call_console_error",
+        "merged": [
+          "ref_packages_gateway_hub_test_junior_ts_call_console_error",
+          "ref_packages_gateway_hub_test_senior_ts_call_console_error"
+        ]
+      },
+      {
+        "label": "d tostring",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_d_tostring",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_d_tostring"
+        ]
+      },
+      {
+        "label": "error",
+        "survivor": "ref_packages_gateway_hub_src_room_manager_ts_call_error",
+        "merged": [
+          "ref_packages_proxy_mcp_src_index_ts_call_error"
+        ]
+      },
+      {
+        "label": "hakuhook shared",
+        "survivor": "ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared",
+        "merged": [
+          "ref_packages_gateway_hub_src_handlers_request_approval_ts_import_hakuhook_shared",
+          "ref_packages_gateway_hub_src_handlers_resolve_approval_ts_import_hakuhook_shared",
+          "ref_packages_gateway_hub_src_json_rpc_ts_import_hakuhook_shared",
+          "ref_packages_gateway_hub_src_server_ts_import_hakuhook_shared",
+          "ref_packages_gateway_hub_src_types_ts_import_hakuhook_shared",
+          "ref_packages_proxy_mcp_src_index_ts_import_hakuhook_shared"
+        ]
+      },
+      {
+        "label": "hub",
+        "survivor": "ref_packages_gateway_hub_test_flow_test_ts_call_hub",
+        "merged": [
+          "ref_packages_gateway_hub_test_senior_ts_call_hub"
+        ]
+      },
+      {
+        "label": "json parse",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_json_parse",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_json_parse"
+        ]
+      },
+      {
+        "label": "json parse",
+        "survivor": "ref_packages_gateway_hub_src_server_ts_call_json_parse",
+        "merged": [
+          "ref_packages_gateway_hub_test_flow_test_ts_call_json_parse",
+          "ref_packages_gateway_hub_test_junior_ts_call_json_parse",
+          "ref_packages_gateway_hub_test_senior_ts_call_json_parse",
+          "ref_packages_proxy_mcp_src_index_ts_call_json_parse",
+          "ref_packages_proxy_mcp_src_mcp_server_ts_call_json_parse"
+        ]
+      },
+      {
+        "label": "json rpc js",
+        "survivor": "ref_packages_gateway_hub_src_handlers_register_session_ts_import_json_rpc_js",
+        "merged": [
+          "ref_packages_gateway_hub_src_handlers_request_approval_ts_import_json_rpc_js",
+          "ref_packages_gateway_hub_src_handlers_resolve_approval_ts_import_json_rpc_js",
+          "ref_packages_gateway_hub_src_index_ts_import_json_rpc_js",
+          "ref_packages_gateway_hub_src_server_ts_import_json_rpc_js"
+        ]
+      },
+      {
+        "label": "json stringify",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_json_stringify",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_json_stringify"
+        ]
+      },
+      {
+        "label": "json stringify",
+        "survivor": "ref_packages_gateway_hub_src_json_rpc_ts_call_json_stringify",
+        "merged": [
+          "ref_packages_gateway_hub_test_flow_test_ts_call_json_stringify",
+          "ref_packages_gateway_hub_test_junior_ts_call_json_stringify",
+          "ref_packages_gateway_hub_test_senior_ts_call_json_stringify",
+          "ref_packages_proxy_mcp_src_index_ts_call_json_stringify",
+          "ref_packages_proxy_mcp_src_mcp_server_ts_call_json_stringify"
+        ]
+      },
+      {
+        "label": "log",
+        "survivor": "symbol_packages_gateway_hub_test_flow_test_ts_function_log",
+        "merged": [
+          "symbol_packages_gateway_hub_test_junior_ts_function_log",
+          "symbol_packages_gateway_hub_test_senior_ts_function_log"
+        ]
+      },
+      {
+        "label": "main",
+        "survivor": "ref_packages_gateway_hub_test_flow_test_ts_call_main",
+        "merged": [
+          "ref_packages_gateway_hub_test_junior_ts_call_main",
+          "ref_packages_gateway_hub_test_senior_ts_call_main",
+          "ref_packages_proxy_mcp_src_index_ts_call_main"
+        ]
+      },
+      {
+        "label": "map",
+        "survivor": "ref_packages_gateway_hub_src_room_manager_ts_call_map",
+        "merged": [
+          "ref_packages_proxy_mcp_src_mcp_server_ts_call_map"
+        ]
+      },
+      {
+        "label": "mcp kill",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_mcp_kill",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_mcp_kill"
+        ]
+      },
+      {
+        "label": "mcpbuffer indexof",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_mcpbuffer_indexof",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_mcpbuffer_indexof"
+        ]
+      },
+      {
+        "label": "mcpbuffer slice",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_mcpbuffer_slice",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_mcpbuffer_slice"
+        ]
+      },
+      {
+        "label": "process cwd",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_process_cwd",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_process_cwd"
+        ]
+      },
+      {
+        "label": "process exit",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_process_exit",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_process_exit"
+        ]
+      },
+      {
+        "label": "process exit",
+        "survivor": "ref_packages_gateway_hub_test_flow_test_ts_call_process_exit",
+        "merged": [
+          "ref_packages_gateway_hub_test_junior_ts_call_process_exit",
+          "ref_packages_gateway_hub_test_senior_ts_call_process_exit"
+        ]
+      },
+      {
+        "label": "promise",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_promise",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_promise"
+        ]
+      },
+      {
+        "label": "promise",
+        "survivor": "ref_packages_gateway_hub_test_flow_test_ts_call_promise",
+        "merged": [
+          "ref_packages_gateway_hub_test_senior_ts_call_promise",
+          "ref_packages_proxy_mcp_src_index_ts_call_promise"
+        ]
+      },
+      {
+        "label": "raw tostring",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_raw_tostring",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_raw_tostring"
+        ]
+      },
+      {
+        "label": "raw tostring",
+        "survivor": "ref_packages_gateway_hub_src_server_ts_call_raw_tostring",
+        "merged": [
+          "ref_packages_gateway_hub_test_flow_test_ts_call_raw_tostring",
+          "ref_packages_gateway_hub_test_junior_ts_call_raw_tostring",
+          "ref_packages_gateway_hub_test_senior_ts_call_raw_tostring",
+          "ref_packages_proxy_mcp_src_index_ts_call_raw_tostring"
+        ]
+      },
+      {
+        "label": "readline createinterface",
+        "survivor": "ref_packages_gateway_hub_test_senior_ts_call_readline_createinterface",
+        "merged": [
+          "ref_packages_proxy_mcp_src_mcp_server_ts_call_readline_createinterface"
+        ]
+      },
+      {
+        "label": "repeat",
+        "survivor": "ref_packages_gateway_hub_test_junior_ts_call_repeat",
+        "merged": [
+          "ref_packages_gateway_hub_test_senior_ts_call_repeat"
+        ]
+      },
+      {
+        "label": "requestapproval",
+        "survivor": "ref_packages_gateway_hub_src_handlers_request_approval_ts_call_requestapproval",
+        "merged": [
+          "ref_packages_gateway_hub_test_flow_test_ts_call_requestapproval"
+        ]
+      },
+      {
+        "label": "requestapproval",
+        "survivor": "symbol_packages_gateway_hub_src_room_manager_ts_function_requestapproval",
+        "merged": [
+          "symbol_packages_proxy_mcp_src_index_ts_function_requestapproval"
+        ]
+      },
+      {
+        "label": "resolve",
+        "survivor": "ref_packages_gateway_hub_test_flow_test_ts_call_resolve",
+        "merged": [
+          "ref_packages_gateway_hub_test_junior_ts_call_resolve",
+          "ref_packages_gateway_hub_test_senior_ts_call_resolve",
+          "ref_packages_proxy_mcp_src_index_ts_call_resolve"
+        ]
+      },
+      {
+        "label": "room manager js",
+        "survivor": "ref_packages_gateway_hub_src_handlers_register_session_ts_import_room_manager_js",
+        "merged": [
+          "ref_packages_gateway_hub_src_handlers_request_approval_ts_import_room_manager_js",
+          "ref_packages_gateway_hub_src_handlers_resolve_approval_ts_import_room_manager_js",
+          "ref_packages_gateway_hub_src_server_ts_import_room_manager_js"
+        ]
+      },
+      {
+        "label": "send",
+        "survivor": "symbol_packages_gateway_hub_src_json_rpc_ts_function_send",
+        "merged": [
+          "symbol_packages_gateway_hub_test_flow_test_ts_function_send"
+        ]
+      },
+      {
+        "label": "senderror",
+        "survivor": "ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror",
+        "merged": [
+          "ref_packages_gateway_hub_src_handlers_request_approval_ts_call_senderror",
+          "ref_packages_gateway_hub_src_handlers_resolve_approval_ts_call_senderror",
+          "ref_packages_gateway_hub_src_server_ts_call_senderror"
+        ]
+      },
+      {
+        "label": "sendresult",
+        "survivor": "ref_packages_gateway_hub_src_handlers_register_session_ts_call_sendresult",
+        "merged": [
+          "ref_packages_gateway_hub_src_handlers_resolve_approval_ts_call_sendresult"
+        ]
+      },
+      {
+        "label": "senior close",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_senior_close",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_senior_close"
+        ]
+      },
+      {
+        "label": "senior on",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_senior_on",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_senior_on"
+        ]
+      },
+      {
+        "label": "senior send",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_senior_send",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_senior_send"
+        ]
+      },
+      {
+        "label": "settimeout",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_settimeout",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_settimeout"
+        ]
+      },
+      {
+        "label": "settimeout",
+        "survivor": "ref_packages_gateway_hub_test_flow_test_ts_call_settimeout",
+        "merged": [
+          "ref_packages_proxy_mcp_src_index_ts_call_settimeout"
+        ]
+      },
+      {
+        "label": "spawn",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_spawn",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_spawn"
+        ]
+      },
+      {
+        "label": "stderr on",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_stderr_on",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_stderr_on"
+        ]
+      },
+      {
+        "label": "stderr write",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_stderr_write",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_stderr_write"
+        ]
+      },
+      {
+        "label": "stdin write",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_stdin_write",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_stdin_write"
+        ]
+      },
+      {
+        "label": "stdout on",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_stdout_on",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_stdout_on"
+        ]
+      },
+      {
+        "label": "string",
+        "survivor": "ref_packages_gateway_hub_src_handlers_resolve_approval_ts_call_string",
+        "merged": [
+          "ref_packages_proxy_mcp_src_index_ts_call_string",
+          "ref_packages_proxy_mcp_src_mcp_server_ts_call_string"
+        ]
+      },
+      {
+        "label": "takeapproval",
+        "survivor": "ref_packages_gateway_hub_src_handlers_request_approval_ts_call_takeapproval",
+        "merged": [
+          "ref_packages_gateway_hub_src_handlers_resolve_approval_ts_call_takeapproval"
+        ]
+      },
+      {
+        "label": "types js",
+        "survivor": "ref_packages_gateway_hub_src_connection_store_ts_import_types_js",
+        "merged": [
+          "ref_packages_gateway_hub_src_handlers_register_session_ts_import_types_js",
+          "ref_packages_gateway_hub_src_handlers_request_approval_ts_import_types_js",
+          "ref_packages_gateway_hub_src_handlers_resolve_approval_ts_import_types_js",
+          "ref_packages_gateway_hub_src_index_ts_import_types_js",
+          "ref_packages_gateway_hub_src_room_manager_ts_import_types_js",
+          "ref_packages_gateway_hub_src_server_ts_import_types_js",
+          "ref_packages_shared_src_index_ts_import_types_js"
+        ]
+      },
+      {
+        "label": "websocket",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_call_websocket",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_call_websocket"
+        ]
+      },
+      {
+        "label": "websocket",
+        "survivor": "ref_packages_gateway_hub_test_flow_test_ts_call_websocket",
+        "merged": [
+          "ref_packages_gateway_hub_test_junior_ts_call_websocket",
+          "ref_packages_gateway_hub_test_senior_ts_call_websocket",
+          "ref_packages_proxy_mcp_src_index_ts_call_websocket"
+        ]
+      },
+      {
+        "label": "ws",
+        "survivor": "ref_packages_proxy_mcp_debug_repro_mjs_import_ws",
+        "merged": [
+          "ref_packages_proxy_mcp_test_mcp_e2e_mjs_import_ws"
+        ]
+      },
+      {
+        "label": "ws",
+        "survivor": "ref_packages_gateway_hub_src_connection_store_ts_import_ws",
+        "merged": [
+          "ref_packages_gateway_hub_src_handlers_register_session_ts_import_ws",
+          "ref_packages_gateway_hub_src_json_rpc_ts_import_ws",
+          "ref_packages_gateway_hub_src_server_ts_import_ws",
+          "ref_packages_gateway_hub_src_types_ts_import_ws",
+          "ref_packages_gateway_hub_test_flow_test_ts_import_ws",
+          "ref_packages_gateway_hub_test_junior_ts_import_ws",
+          "ref_packages_gateway_hub_test_senior_ts_import_ws",
+          "ref_packages_proxy_mcp_src_index_ts_import_ws"
+        ]
+      },
+      {
+        "label": "ws close",
+        "survivor": "ref_packages_gateway_hub_test_junior_ts_call_ws_close",
+        "merged": [
+          "ref_packages_gateway_hub_test_senior_ts_call_ws_close"
+        ]
+      },
+      {
+        "label": "ws on",
+        "survivor": "ref_packages_gateway_hub_test_flow_test_ts_call_ws_on",
+        "merged": [
+          "ref_packages_gateway_hub_test_junior_ts_call_ws_on",
+          "ref_packages_gateway_hub_test_senior_ts_call_ws_on",
+          "ref_packages_proxy_mcp_src_index_ts_call_ws_on"
+        ]
+      },
+      {
+        "label": "ws once",
+        "survivor": "ref_packages_gateway_hub_test_flow_test_ts_call_ws_once",
+        "merged": [
+          "ref_packages_gateway_hub_test_junior_ts_call_ws_once",
+          "ref_packages_gateway_hub_test_senior_ts_call_ws_once"
+        ]
+      },
+      {
+        "label": "ws send",
+        "survivor": "ref_packages_gateway_hub_test_junior_ts_call_ws_send",
+        "merged": [
+          "ref_packages_gateway_hub_test_senior_ts_call_ws_send",
+          "ref_packages_proxy_mcp_src_index_ts_call_ws_send"
+        ]
+      }
+    ],
+    "droppedSelfLoopCount": 7
+  },
+  "clusteringSummary": {
+    "backend": "deterministic_components",
+    "usedFallback": true,
+    "communityCount": 20,
+    "isolateCount": 2,
+    "maxCommunitySize": 37
+  },
+  "analysisSummary": {
+    "godNodeCount": 10,
+    "surprisingConnectionCount": 5,
+    "suggestedQuestionCount": 5,
+    "ambiguousEdgeCount": 349
+  },
+  "semanticSummary": {
+    "enabled": false,
+    "mode": "docs_first",
+    "backend": "none",
+    "providerEnrichmentSkipped": true,
+    "selectedDocumentCount": 0,
+    "processedDocumentCount": 0,
+    "skippedDocumentCount": 0,
+    "nodeCount": 0,
+    "edgeCount": 0,
+    "hyperedgeCount": 0,
+    "warningCount": 0
+  },
+  "architectureContextSummary": {
+    "subsystemCount": 20,
+    "interfaceCount": 70,
+    "dataFlowCount": 43,
+    "crossCuttingConcernCount": 4,
+    "entrypointCount": 66,
+    "externalDependencyCount": 137,
+    "openQuestionCount": 30,
+    "docEvidenceSubsystemCount": 0,
+    "processedDocumentCount": 0
+  },
+  "files": {
+    "opencode.json": {
+      "mtime": 1791921762.646191,
+      "sizeBytes": 341,
+      "hash": "96568c1ccf0fc575dea9e3e1d67a61476bd84c6a4c46be6b92fbf45ada880ff2",
+      "fileType": "config",
+      "architectureTags": [],
+      "extraction": {
+        "language": null,
+        "status": "skipped",
+        "nodeCount": 0,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "package.json": {
+      "mtime": 1787181796.7026963,
+      "sizeBytes": 373,
+      "hash": "57cbd4137f95d64452704766f3784d3945f95b67bbbf61b3440abbac1d6f7233",
+      "fileType": "config",
+      "architectureTags": [
+        "dependency_manifest"
+      ],
+      "extraction": {
+        "language": null,
+        "status": "skipped",
+        "nodeCount": 0,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "pnpm-workspace.yaml": {
+      "mtime": 1787181917.8596132,
+      "sizeBytes": 27,
+      "hash": "c6b83e2be340843cfd2d8f77f3b9ec91a1c0ef116d1b2e57afce03dd67b201cf",
+      "fileType": "config",
+      "architectureTags": [],
+      "extraction": {
+        "language": null,
+        "status": "skipped",
+        "nodeCount": 0,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "tsconfig.base.json": {
+      "mtime": 1787196920.8713632,
+      "sizeBytes": 310,
+      "hash": "e0cde7353e7293e8d8eb391809a0e9f6d20cb67e71efe31bc7e72f5fcfe64b98",
+      "fileType": "config",
+      "architectureTags": [],
+      "extraction": {
+        "language": null,
+        "status": "skipped",
+        "nodeCount": 0,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "openspec/config.yaml": {
+      "mtime": 1788400745.6372044,
+      "sizeBytes": 259,
+      "hash": "a29225206cdb2e400bff6cda3409fadb9a3576009840ab2728ca49af05839aa0",
+      "fileType": "config",
+      "architectureTags": [],
+      "extraction": {
+        "language": null,
+        "status": "skipped",
+        "nodeCount": 0,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/package.json": {
+      "mtime": 1787282526.9360094,
+      "sizeBytes": 609,
+      "hash": "3adc9fa0cd3ad8b58aea8581005bb0d8894cd4ec90e4e144d55ad4bd038a1b29",
+      "fileType": "config",
+      "architectureTags": [
+        "dependency_manifest"
+      ],
+      "extraction": {
+        "language": null,
+        "status": "skipped",
+        "nodeCount": 0,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/tsconfig.json": {
+      "mtime": 1787284465.172628,
+      "sizeBytes": 154,
+      "hash": "60df949422db12596382c7021662a4481bf5bd866977ffd5f4f74a26cc4efca7",
+      "fileType": "config",
+      "architectureTags": [],
+      "extraction": {
+        "language": null,
+        "status": "skipped",
+        "nodeCount": 0,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/src/connection-store.ts": {
+      "mtime": 1788404343.753025,
+      "sizeBytes": 707,
+      "hash": "822f6046e1a25f11686617beb5fe1fe9299755de74744d82f2e71d49cfcb390c",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 11,
+        "edgeCount": 10,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/src/index.ts": {
+      "mtime": 1791921762.6582458,
+      "sizeBytes": 354,
+      "hash": "1b6340413104c5fb5331e9ea00459ec9504104feefd536a75b14de2227970aaa",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 3,
+        "edgeCount": 2,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/src/json-rpc.ts": {
+      "mtime": 1787448230.4721918,
+      "sizeBytes": 676,
+      "hash": "924ebaf62e46480460fcb2e0df3b08313007ce59a3b65672926c8615fa5d82a8",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 7,
+        "edgeCount": 9,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/src/room-manager.ts": {
+      "mtime": 1791921762.6582458,
+      "sizeBytes": 2319,
+      "hash": "5ca8c0fd4115e1c8f61583759dcc13cceed2766e595843b8b0d366444e237add",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 20,
+        "edgeCount": 23,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/src/server.ts": {
+      "mtime": 1791921762.662264,
+      "sizeBytes": 1875,
+      "hash": "4e76b30628381e4d1d0b8afc873f2d850821977184a0015495eacfdac63f6118",
+      "fileType": "code",
+      "architectureTags": [
+        "entrypoint"
+      ],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 23,
+        "edgeCount": 29,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/src/types.ts": {
+      "mtime": 1791921762.6662827,
+      "sizeBytes": 526,
+      "hash": "e7cf9ddcc5cbb4766787b0f01e701f409523816d1503af792ad72dbb9360e4e1",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 3,
+        "edgeCount": 2,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/src/handlers/register-session.ts": {
+      "mtime": 1788444941.4729671,
+      "sizeBytes": 987,
+      "hash": "63ee5386ecea91a2f76bfa3a5f92d41887271579b2c79345e9895e1b7c2d198d",
+      "fileType": "code",
+      "architectureTags": [
+        "route"
+      ],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 12,
+        "edgeCount": 12,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/src/handlers/request-approval.ts": {
+      "mtime": 1791921762.6542275,
+      "sizeBytes": 1122,
+      "hash": "b2093f780384f6532e1596a6ce63a291891b4460ad8e897bb1cad5ca347ab36e",
+      "fileType": "code",
+      "architectureTags": [
+        "route"
+      ],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 12,
+        "edgeCount": 12,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/src/handlers/resolve-approval.ts": {
+      "mtime": 1791921762.6542275,
+      "sizeBytes": 703,
+      "hash": "44fc2e91bba2d884940d1d3ec31fd3789cf6189373809e8515a0b151d34c6459",
+      "fileType": "code",
+      "architectureTags": [
+        "route"
+      ],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 10,
+        "edgeCount": 9,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/test/flow-test.ts": {
+      "mtime": 1791921762.670301,
+      "sizeBytes": 5966,
+      "hash": "0dc4ec9d2a3d8581c4ec17a20851fa7565f724d0ea5a9c2f6901b7dbff3ad978",
+      "fileType": "code",
+      "architectureTags": [
+        "test"
+      ],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 26,
+        "edgeCount": 72,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/test/junior.ts": {
+      "mtime": 1791921762.6743193,
+      "sizeBytes": 2629,
+      "hash": "57eed3c407b23cfa1cb4feaf45c4a2e295d061109ba6346367c194d06e156924",
+      "fileType": "code",
+      "architectureTags": [
+        "test"
+      ],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 16,
+        "edgeCount": 42,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/test/senior.ts": {
+      "mtime": 1791921762.6743193,
+      "sizeBytes": 3506,
+      "hash": "e618c4fdd947301ab90aed1dd06be64f09b6473cb97114cb550a84ef45986c37",
+      "fileType": "code",
+      "architectureTags": [
+        "test"
+      ],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 29,
+        "edgeCount": 62,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/gateway-hub/test/start-server.ts": {
+      "mtime": 1791921762.6783376,
+      "sizeBytes": 206,
+      "hash": "6d98f0b903e6d87010c2d718b7deee1730091d8a00f850259fc8a734888de88f",
+      "fileType": "code",
+      "architectureTags": [
+        "test"
+      ],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 2,
+        "edgeCount": 2,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/shared/package.json": {
+      "mtime": 1787187888.8378704,
+      "sizeBytes": 338,
+      "hash": "8ff77046901b134b70a4f3f07bc60e265d66bcdf4821ef71795a472e714a4775",
+      "fileType": "config",
+      "architectureTags": [
+        "dependency_manifest"
+      ],
+      "extraction": {
+        "language": null,
+        "status": "skipped",
+        "nodeCount": 0,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/shared/tsconfig.json": {
+      "mtime": 1787187953.7269778,
+      "sizeBytes": 154,
+      "hash": "60df949422db12596382c7021662a4481bf5bd866977ffd5f4f74a26cc4efca7",
+      "fileType": "config",
+      "architectureTags": [],
+      "extraction": {
+        "language": null,
+        "status": "skipped",
+        "nodeCount": 0,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/shared/src/index.ts": {
+      "mtime": 1787196395.7429,
+      "sizeBytes": 59,
+      "hash": "628a48cc20c8e0e2f45c8b5da4df5bf19a5a2ddc63404d4138368f80d0220998",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 3,
+        "edgeCount": 2,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/shared/src/protocol.ts": {
+      "mtime": 1787196397.542898,
+      "sizeBytes": 443,
+      "hash": "4cd7eb3cb2df7833b624f268e4bf25cb3cb3fe10cf0990f5e237451250d6c83f",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 1,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/shared/src/types.ts": {
+      "mtime": 1787196400.0184557,
+      "sizeBytes": 587,
+      "hash": "697e6ac4e3aeb9775930662a95458f450fe047ddc5a45fd90b153d96c1d13355",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 1,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/proxy-mcp/debug-repro.mjs": {
+      "mtime": 1791921762.6823559,
+      "sizeBytes": 2485,
+      "hash": "6f3a2473ae750470f63591a3180d8166a6b21a750327d972a2312074b2a7f5fc",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "javascript",
+        "status": "ready",
+        "nodeCount": 26,
+        "edgeCount": 48,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/proxy-mcp/package.json": {
+      "mtime": 1791921762.6823559,
+      "sizeBytes": 518,
+      "hash": "15c3c482600d56d4005858f8aa0017cd0fcada576742cffdad45947338d49372",
+      "fileType": "config",
+      "architectureTags": [
+        "dependency_manifest"
+      ],
+      "extraction": {
+        "language": null,
+        "status": "skipped",
+        "nodeCount": 0,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/proxy-mcp/test-mcp-e2e.mjs": {
+      "mtime": 1791921762.6903925,
+      "sizeBytes": 4296,
+      "hash": "2157284d241a35bc3b5336d38a70a1e19d2209468e4b882a584cb9c737e4920d",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "javascript",
+        "status": "ready",
+        "nodeCount": 34,
+        "edgeCount": 66,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/proxy-mcp/tsconfig.json": {
+      "mtime": 1791921762.6903925,
+      "sizeBytes": 154,
+      "hash": "60df949422db12596382c7021662a4481bf5bd866977ffd5f4f74a26cc4efca7",
+      "fileType": "config",
+      "architectureTags": [],
+      "extraction": {
+        "language": null,
+        "status": "skipped",
+        "nodeCount": 0,
+        "edgeCount": 0,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/proxy-mcp/src/destructive.ts": {
+      "mtime": 1791921762.6823559,
+      "sizeBytes": 3435,
+      "hash": "b4c9ba2a48b87457cce2c893e79ee9f6a3b79d7c6b721db7a9b708a3cb25a4bc",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 11,
+        "edgeCount": 13,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/proxy-mcp/src/index.ts": {
+      "mtime": 1791921762.6863742,
+      "sizeBytes": 8452,
+      "hash": "f042af65b06c744b587c66b217f85aa9ad5f3a3af37d81f67261281894e6c6c8",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 41,
+        "edgeCount": 61,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    },
+    "packages/proxy-mcp/src/mcp-server.ts": {
+      "mtime": 1791921762.6863742,
+      "sizeBytes": 3265,
+      "hash": "d7367b37de390fa11d143e7d7528a6b23441a80b6cde1479e572878e17091b08",
+      "fileType": "code",
+      "architectureTags": [],
+      "extraction": {
+        "language": "typescript",
+        "status": "ready",
+        "nodeCount": 21,
+        "edgeCount": 22,
+        "warning": null
+      },
+      "semantic": {
+        "status": "disabled",
+        "reason": "semantic_disabled",
+        "backend": "none",
+        "providerStatus": "skipped"
+      }
+    }
+  }
+}

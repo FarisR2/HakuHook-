@@ -1,0 +1,1075 @@
+{
+  "artifact": "routes.json",
+  "status": "ready",
+  "phase": "analyze",
+  "targetPath": "/home/haku/hakuhook",
+  "scanRoot": ".",
+  "confirmedRoutes": [
+    {
+      "id": "route:cli_packages_gateway_hub_src_connection_store_ts_getclient",
+      "name": "getClient()",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/src/connection-store.ts",
+      "subsystemId": "subsystem-7-0-packages-gateway-hub",
+      "summary": "getClient() appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_connection_store_ts:contains:symbol_packages_gateway_hub_src_connection_store_ts_function_getclient:packages/gateway-hub/src/connection-store.ts:13:0",
+        "edge:symbol_packages_gateway_hub_src_connection_store_ts_function_getclient:calls:ref_packages_gateway_hub_src_connection_store_ts_call_clients_get:packages/gateway-hub/src/connection-store.ts:14:0",
+        "node:symbol_packages_gateway_hub_src_connection_store_ts_function_getclient"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:cli_packages_gateway_hub_src_connection_store_ts_registerclient",
+      "name": "registerClient()",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/src/connection-store.ts",
+      "subsystemId": "subsystem-7-0-packages-gateway-hub",
+      "summary": "registerClient() appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_connection_store_ts:contains:symbol_packages_gateway_hub_src_connection_store_ts_function_registerclient:packages/gateway-hub/src/connection-store.ts:8:0",
+        "edge:symbol_packages_gateway_hub_src_connection_store_ts_function_registerclient:calls:ref_packages_gateway_hub_src_connection_store_ts_call_clients_set:packages/gateway-hub/src/connection-store.ts:9:0",
+        "node:symbol_packages_gateway_hub_src_connection_store_ts_function_registerclient"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:cli_packages_gateway_hub_src_connection_store_ts_removeclientconnection",
+      "name": "removeClientConnection()",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/src/connection-store.ts",
+      "subsystemId": "subsystem-7-0-packages-gateway-hub",
+      "summary": "removeClientConnection() appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_connection_store_ts:contains:symbol_packages_gateway_hub_src_connection_store_ts_function_removeclientconnection:packages/gateway-hub/src/connection-store.ts:18:0",
+        "edge:symbol_packages_gateway_hub_src_connection_store_ts_function_removeclientconnection:calls:ref_packages_gateway_hub_src_connection_store_ts_call_clients_delete:packages/gateway-hub/src/connection-store.ts:19:0",
+        "node:symbol_packages_gateway_hub_src_connection_store_ts_function_removeclientconnection"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_register_session_ts_connection_store_js",
+      "name": "../connection-store.js",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/register-session.ts",
+      "subsystemId": "subsystem-9-0-packages-gateway-hub",
+      "summary": "../connection-store.js appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_connection_store_js:packages/gateway-hub/src/handlers/register-session.ts:6:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_connection_store_js:packages/gateway-hub/src/server.ts:5:0",
+        "node:ref_packages_gateway_hub_src_handlers_register_session_ts_import_connection_store_js"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_register_session_ts_json_rpc_js",
+      "name": "../json-rpc.js",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/register-session.ts",
+      "subsystemId": "subsystem-9-0-packages-gateway-hub",
+      "summary": "../json-rpc.js appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_json_rpc_js:packages/gateway-hub/src/handlers/register-session.ts:5:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_json_rpc_js:packages/gateway-hub/src/handlers/request-approval.ts:4:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_json_rpc_js:packages/gateway-hub/src/handlers/resolve-approval.ts:4:0",
+        "edge:file_packages_gateway_hub_src_index_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_json_rpc_js:packages/gateway-hub/src/index.ts:15:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_json_rpc_js:packages/gateway-hub/src/server.ts:3:0",
+        "node:ref_packages_gateway_hub_src_handlers_register_session_ts_import_json_rpc_js"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_register_session_ts_room_manager_js",
+      "name": "../room-manager.js",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/register-session.ts",
+      "subsystemId": "subsystem-9-0-packages-gateway-hub",
+      "summary": "../room-manager.js appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_room_manager_js:packages/gateway-hub/src/handlers/register-session.ts:4:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_room_manager_js:packages/gateway-hub/src/handlers/request-approval.ts:3:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_room_manager_js:packages/gateway-hub/src/handlers/resolve-approval.ts:3:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_room_manager_js:packages/gateway-hub/src/server.ts:6:0",
+        "node:ref_packages_gateway_hub_src_handlers_register_session_ts_import_room_manager_js"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_register_session_ts_hakuhook_shared",
+      "name": "@hakuhook/shared",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/register-session.ts",
+      "subsystemId": "subsystem-9-0-packages-gateway-hub",
+      "summary": "@hakuhook/shared appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared:packages/gateway-hub/src/handlers/register-session.ts:1:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared:packages/gateway-hub/src/handlers/request-approval.ts:1:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared:packages/gateway-hub/src/handlers/resolve-approval.ts:1:0",
+        "edge:file_packages_gateway_hub_src_json_rpc_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared:packages/gateway-hub/src/json-rpc.ts:2:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared:packages/gateway-hub/src/server.ts:4:0",
+        "edge:file_packages_gateway_hub_src_types_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared:packages/gateway-hub/src/types.ts:2:0",
+        "edge:file_packages_proxy_mcp_src_index_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared:packages/proxy-mcp/src/index.ts:17:0",
+        "node:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_register_session_ts_handlersession",
+      "name": "handlerSession()",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/register-session.ts",
+      "subsystemId": "subsystem-9-0-packages-gateway-hub",
+      "summary": "handlerSession() appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:contains:symbol_packages_gateway_hub_src_handlers_register_session_ts_function_handlersession:packages/gateway-hub/src/handlers/register-session.ts:8:0",
+        "node:symbol_packages_gateway_hub_src_handlers_register_session_ts_function_handlersession"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_register_session_ts_joinroom",
+      "name": "joinRoom",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/register-session.ts",
+      "subsystemId": "subsystem-9-0-packages-gateway-hub",
+      "summary": "joinRoom appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_joinroom:packages/gateway-hub/src/handlers/register-session.ts:27:0",
+        "node:ref_packages_gateway_hub_src_handlers_register_session_ts_call_joinroom"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_register_session_ts_packages_gateway_hub_src_handlers_register_session_ts",
+      "name": "packages/gateway-hub/src/handlers/register-session.ts",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/register-session.ts",
+      "subsystemId": "subsystem-9-0-packages-gateway-hub",
+      "summary": "packages/gateway-hub/src/handlers/register-session.ts appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_joinroom:packages/gateway-hub/src/handlers/register-session.ts:27:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_registerclient:packages/gateway-hub/src/handlers/register-session.ts:28:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/handlers/register-session.ts:15:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/handlers/register-session.ts:32:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_sendresult:packages/gateway-hub/src/handlers/register-session.ts:29:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:contains:symbol_packages_gateway_hub_src_handlers_register_session_ts_function_handlersession:packages/gateway-hub/src/handlers/register-session.ts:8:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:imports:ref_packages_gateway_hub_src_connection_store_ts_import_types_js:packages/gateway-hub/src/handlers/register-session.ts:3:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:imports:ref_packages_gateway_hub_src_connection_store_ts_import_ws:packages/gateway-hub/src/handlers/register-session.ts:2:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_connection_store_js:packages/gateway-hub/src/handlers/register-session.ts:6:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared:packages/gateway-hub/src/handlers/register-session.ts:1:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_json_rpc_js:packages/gateway-hub/src/handlers/register-session.ts:5:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_room_manager_js:packages/gateway-hub/src/handlers/register-session.ts:4:0",
+        "node:file_packages_gateway_hub_src_handlers_register_session_ts"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_register_session_ts_senderror",
+      "name": "sendError",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/register-session.ts",
+      "subsystemId": "subsystem-9-0-packages-gateway-hub",
+      "summary": "sendError appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/handlers/register-session.ts:15:0",
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/handlers/register-session.ts:32:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/handlers/request-approval.ts:15:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/handlers/request-approval.ts:33:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/handlers/resolve-approval.ts:13:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/server.ts:21:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/server.ts:47:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/server.ts:57:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/server.ts:64:0",
+        "node:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_register_session_ts_sendresult",
+      "name": "sendResult",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/register-session.ts",
+      "subsystemId": "subsystem-9-0-packages-gateway-hub",
+      "summary": "sendResult appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_sendresult:packages/gateway-hub/src/handlers/register-session.ts:29:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_sendresult:packages/gateway-hub/src/handlers/resolve-approval.ts:18:0",
+        "node:ref_packages_gateway_hub_src_handlers_register_session_ts_call_sendresult"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_request_approval_ts_crypto_randomuuid",
+      "name": "crypto.randomUUID",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/request-approval.ts",
+      "subsystemId": "subsystem-10-0-packages-gateway-hub",
+      "summary": "crypto.randomUUID appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_crypto_randomuuid:packages/gateway-hub/src/handlers/request-approval.ts:20:0",
+        "node:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_crypto_randomuuid"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_request_approval_ts_getsenior",
+      "name": "getSenior",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/request-approval.ts",
+      "subsystemId": "subsystem-10-0-packages-gateway-hub",
+      "summary": "getSenior appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_getsenior:packages/gateway-hub/src/handlers/request-approval.ts:12:0",
+        "node:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_getsenior"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_request_approval_ts_handlerrequestapproval",
+      "name": "handlerRequestApproval()",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/request-approval.ts",
+      "subsystemId": "subsystem-10-0-packages-gateway-hub",
+      "summary": "handlerRequestApproval() appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:contains:symbol_packages_gateway_hub_src_handlers_request_approval_ts_function_handlerrequestapproval:packages/gateway-hub/src/handlers/request-approval.ts:7:0",
+        "node:symbol_packages_gateway_hub_src_handlers_request_approval_ts_function_handlerrequestapproval"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_request_approval_ts_packages_gateway_hub_src_handlers_request_approval_ts",
+      "name": "packages/gateway-hub/src/handlers/request-approval.ts",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/request-approval.ts",
+      "subsystemId": "subsystem-10-0-packages-gateway-hub",
+      "summary": "packages/gateway-hub/src/handlers/request-approval.ts appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/handlers/request-approval.ts:15:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/handlers/request-approval.ts:33:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_crypto_randomuuid:packages/gateway-hub/src/handlers/request-approval.ts:20:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_getsenior:packages/gateway-hub/src/handlers/request-approval.ts:12:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_requestapproval:packages/gateway-hub/src/handlers/request-approval.ts:21:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_send:packages/gateway-hub/src/handlers/request-approval.ts:25:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_takeapproval:packages/gateway-hub/src/handlers/request-approval.ts:31:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:contains:symbol_packages_gateway_hub_src_handlers_request_approval_ts_function_handlerrequestapproval:packages/gateway-hub/src/handlers/request-approval.ts:7:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:imports:ref_packages_gateway_hub_src_connection_store_ts_import_types_js:packages/gateway-hub/src/handlers/request-approval.ts:2:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared:packages/gateway-hub/src/handlers/request-approval.ts:1:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_json_rpc_js:packages/gateway-hub/src/handlers/request-approval.ts:4:0",
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_room_manager_js:packages/gateway-hub/src/handlers/request-approval.ts:3:0",
+        "node:file_packages_gateway_hub_src_handlers_request_approval_ts"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_request_approval_ts_requestapproval",
+      "name": "requestApproval",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/request-approval.ts",
+      "subsystemId": "subsystem-10-0-packages-gateway-hub",
+      "summary": "requestApproval appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_requestapproval:packages/gateway-hub/src/handlers/request-approval.ts:21:0",
+        "edge:file_packages_gateway_hub_test_flow_test_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_requestapproval:packages/gateway-hub/test/flow-test.ts:83:0",
+        "node:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_requestapproval"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_request_approval_ts_send",
+      "name": "send",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/request-approval.ts",
+      "subsystemId": "subsystem-10-0-packages-gateway-hub",
+      "summary": "send appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_send:packages/gateway-hub/src/handlers/request-approval.ts:25:0",
+        "node:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_send"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_request_approval_ts_takeapproval",
+      "name": "takeApproval",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/request-approval.ts",
+      "subsystemId": "subsystem-10-0-packages-gateway-hub",
+      "summary": "takeApproval appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_request_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_takeapproval:packages/gateway-hub/src/handlers/request-approval.ts:31:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_takeapproval:packages/gateway-hub/src/handlers/resolve-approval.ts:10:0",
+        "node:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_takeapproval"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_resolve_approval_ts_string",
+      "name": "String",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/resolve-approval.ts",
+      "subsystemId": "subsystem-13-0-packages-gateway-hub",
+      "summary": "String appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:calls:ref_packages_gateway_hub_src_handlers_resolve_approval_ts_call_string:packages/gateway-hub/src/handlers/resolve-approval.ts:10:0",
+        "edge:file_packages_proxy_mcp_src_index_ts:calls:ref_packages_gateway_hub_src_handlers_resolve_approval_ts_call_string:packages/proxy-mcp/src/index.ts:229:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_gateway_hub_src_handlers_resolve_approval_ts_call_string:packages/proxy-mcp/src/mcp-server.ts:116:0",
+        "node:ref_packages_gateway_hub_src_handlers_resolve_approval_ts_call_string"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_resolve_approval_ts_handlerresolveapproval",
+      "name": "handlerResolveApproval()",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/resolve-approval.ts",
+      "subsystemId": "subsystem-13-0-packages-gateway-hub",
+      "summary": "handlerResolveApproval() appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:contains:symbol_packages_gateway_hub_src_handlers_resolve_approval_ts_function_handlerresolveapproval:packages/gateway-hub/src/handlers/resolve-approval.ts:6:0",
+        "node:symbol_packages_gateway_hub_src_handlers_resolve_approval_ts_function_handlerresolveapproval"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:route_packages_gateway_hub_src_handlers_resolve_approval_ts_packages_gateway_hub_src_handlers_resolve_approval_ts",
+      "name": "packages/gateway-hub/src/handlers/resolve-approval.ts",
+      "entryType": "http",
+      "boundaryKind": "route",
+      "sourcePath": "packages/gateway-hub/src/handlers/resolve-approval.ts",
+      "subsystemId": "subsystem-13-0-packages-gateway-hub",
+      "summary": "packages/gateway-hub/src/handlers/resolve-approval.ts appears to be a route boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/handlers/resolve-approval.ts:13:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_sendresult:packages/gateway-hub/src/handlers/resolve-approval.ts:18:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:calls:ref_packages_gateway_hub_src_handlers_request_approval_ts_call_takeapproval:packages/gateway-hub/src/handlers/resolve-approval.ts:10:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:calls:ref_packages_gateway_hub_src_handlers_resolve_approval_ts_call_string:packages/gateway-hub/src/handlers/resolve-approval.ts:10:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:contains:symbol_packages_gateway_hub_src_handlers_resolve_approval_ts_function_handlerresolveapproval:packages/gateway-hub/src/handlers/resolve-approval.ts:6:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:imports:ref_packages_gateway_hub_src_connection_store_ts_import_types_js:packages/gateway-hub/src/handlers/resolve-approval.ts:2:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared:packages/gateway-hub/src/handlers/resolve-approval.ts:1:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_json_rpc_js:packages/gateway-hub/src/handlers/resolve-approval.ts:4:0",
+        "edge:file_packages_gateway_hub_src_handlers_resolve_approval_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_room_manager_js:packages/gateway-hub/src/handlers/resolve-approval.ts:3:0",
+        "node:file_packages_gateway_hub_src_handlers_resolve_approval_ts"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:cli_packages_gateway_hub_src_room_manager_ts_removeclient",
+      "name": "removeClient()",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/src/room-manager.ts",
+      "subsystemId": "subsystem-3-0-packages-gateway-hub",
+      "summary": "removeClient() appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_room_manager_ts:contains:symbol_packages_gateway_hub_src_room_manager_ts_function_removeclient:packages/gateway-hub/src/room-manager.ts:34:0",
+        "edge:symbol_packages_gateway_hub_src_room_manager_ts_function_removeclient:calls:ref_packages_gateway_hub_src_room_manager_ts_call_approvals_delete:packages/gateway-hub/src/room-manager.ts:49:0",
+        "edge:symbol_packages_gateway_hub_src_room_manager_ts_function_removeclient:calls:ref_packages_gateway_hub_src_room_manager_ts_call_juniors_delete:packages/gateway-hub/src/room-manager.ts:43:0",
+        "edge:symbol_packages_gateway_hub_src_room_manager_ts_function_removeclient:calls:ref_packages_gateway_hub_src_room_manager_ts_call_rooms_delete:packages/gateway-hub/src/room-manager.ts:55:0",
+        "edge:symbol_packages_gateway_hub_src_room_manager_ts_function_removeclient:calls:ref_packages_gateway_hub_src_room_manager_ts_call_rooms_get:packages/gateway-hub/src/room-manager.ts:35:0",
+        "node:symbol_packages_gateway_hub_src_room_manager_ts_function_removeclient"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_handlers_register_session_js",
+      "name": "./handlers/register-session.js",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "./handlers/register-session.js appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_server_ts_import_handlers_register_session_js:packages/gateway-hub/src/server.ts:7:0",
+        "node:ref_packages_gateway_hub_src_server_ts_import_handlers_register_session_js"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_handlers_request_approval_js",
+      "name": "./handlers/request-approval.js",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "./handlers/request-approval.js appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_server_ts_import_handlers_request_approval_js:packages/gateway-hub/src/server.ts:8:0",
+        "node:ref_packages_gateway_hub_src_server_ts_import_handlers_request_approval_js"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_handlers_resolve_approval_js",
+      "name": "./handlers/resolve-approval.js",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "./handlers/resolve-approval.js appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_server_ts_import_handlers_resolve_approval_js:packages/gateway-hub/src/server.ts:9:0",
+        "node:ref_packages_gateway_hub_src_server_ts_import_handlers_resolve_approval_js"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_json_parse",
+      "name": "JSON.parse",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "JSON.parse appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_json_parse:packages/gateway-hub/src/server.ts:19:0",
+        "edge:file_packages_gateway_hub_test_junior_ts:calls:ref_packages_gateway_hub_src_server_ts_call_json_parse:packages/gateway-hub/test/junior.ts:34:0",
+        "edge:file_packages_gateway_hub_test_junior_ts:calls:ref_packages_gateway_hub_src_server_ts_call_json_parse:packages/gateway-hub/test/junior.ts:58:0",
+        "edge:file_packages_gateway_hub_test_senior_ts:calls:ref_packages_gateway_hub_src_server_ts_call_json_parse:packages/gateway-hub/test/senior.ts:48:0",
+        "edge:file_packages_gateway_hub_test_senior_ts:calls:ref_packages_gateway_hub_src_server_ts_call_json_parse:packages/gateway-hub/test/senior.ts:56:0",
+        "edge:file_packages_gateway_hub_test_senior_ts:calls:ref_packages_gateway_hub_src_server_ts_call_json_parse:packages/gateway-hub/test/senior.ts:97:0",
+        "edge:symbol_packages_gateway_hub_test_flow_test_ts_function_waitmessage:calls:ref_packages_gateway_hub_src_server_ts_call_json_parse:packages/gateway-hub/test/flow-test.ts:37:0",
+        "edge:symbol_packages_proxy_mcp_src_index_ts_function_connecthub:calls:ref_packages_gateway_hub_src_server_ts_call_json_parse:packages/proxy-mcp/src/index.ts:56:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_gateway_hub_src_server_ts_call_json_parse:packages/proxy-mcp/src/mcp-server.ts:58:0",
+        "node:ref_packages_gateway_hub_src_server_ts_call_json_parse"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_websocketserver",
+      "name": "WebSocketServer",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "WebSocketServer appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_websocketserver:packages/gateway-hub/src/server.ts:13:0",
+        "node:ref_packages_gateway_hub_src_server_ts_call_websocketserver"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_dispatch",
+      "name": "dispatch()",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "dispatch() appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:calls:symbol_packages_gateway_hub_src_server_ts_function_dispatch:packages/gateway-hub/src/server.ts:26:0",
+        "edge:file_packages_gateway_hub_src_server_ts:contains:symbol_packages_gateway_hub_src_server_ts_function_dispatch:packages/gateway-hub/src/server.ts:38:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/server.ts:47:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/server.ts:57:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/server.ts:64:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_server_ts_call_getclient:packages/gateway-hub/src/server.ts:45:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_server_ts_call_getclient:packages/gateway-hub/src/server.ts:55:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_server_ts_call_handlerrequestapproval:packages/gateway-hub/src/server.ts:50:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_server_ts_call_handlerresolveapproval:packages/gateway-hub/src/server.ts:60:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_server_ts_call_handlersession:packages/gateway-hub/src/server.ts:41:0",
+        "node:symbol_packages_gateway_hub_src_server_ts_function_dispatch"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_getclient",
+      "name": "getClient",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "getClient appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_getclient:packages/gateway-hub/src/server.ts:30:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_server_ts_call_getclient:packages/gateway-hub/src/server.ts:45:0",
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_server_ts_call_getclient:packages/gateway-hub/src/server.ts:55:0",
+        "node:ref_packages_gateway_hub_src_server_ts_call_getclient"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_handlerrequestapproval",
+      "name": "handlerRequestApproval",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "handlerRequestApproval appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_server_ts_call_handlerrequestapproval:packages/gateway-hub/src/server.ts:50:0",
+        "node:ref_packages_gateway_hub_src_server_ts_call_handlerrequestapproval"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_handlerresolveapproval",
+      "name": "handlerResolveApproval",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "handlerResolveApproval appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_server_ts_call_handlerresolveapproval:packages/gateway-hub/src/server.ts:60:0",
+        "node:ref_packages_gateway_hub_src_server_ts_call_handlerresolveapproval"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_handlersession",
+      "name": "handlerSession",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "handlerSession appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:symbol_packages_gateway_hub_src_server_ts_function_dispatch:calls:ref_packages_gateway_hub_src_server_ts_call_handlersession:packages/gateway-hub/src/server.ts:41:0",
+        "node:ref_packages_gateway_hub_src_server_ts_call_handlersession"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_packages_gateway_hub_src_server_ts",
+      "name": "packages/gateway-hub/src/server.ts",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "packages/gateway-hub/src/server.ts appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_senderror:packages/gateway-hub/src/server.ts:21:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_getclient:packages/gateway-hub/src/server.ts:30:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_json_parse:packages/gateway-hub/src/server.ts:19:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_raw_tostring:packages/gateway-hub/src/server.ts:19:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_removeclient:packages/gateway-hub/src/server.ts:32:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_removeclientconnection:packages/gateway-hub/src/server.ts:33:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_socket_on:packages/gateway-hub/src/server.ts:16:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_socket_on:packages/gateway-hub/src/server.ts:29:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_websocketserver:packages/gateway-hub/src/server.ts:13:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_wss_on:packages/gateway-hub/src/server.ts:15:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:symbol_packages_gateway_hub_src_server_ts_function_dispatch:packages/gateway-hub/src/server.ts:26:0",
+        "edge:file_packages_gateway_hub_src_server_ts:contains:symbol_packages_gateway_hub_src_server_ts_function_dispatch:packages/gateway-hub/src/server.ts:38:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_connection_store_ts_import_types_js:packages/gateway-hub/src/server.ts:2:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_connection_store_ts_import_ws:packages/gateway-hub/src/server.ts:1:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_connection_store_js:packages/gateway-hub/src/server.ts:5:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_hakuhook_shared:packages/gateway-hub/src/server.ts:4:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_json_rpc_js:packages/gateway-hub/src/server.ts:3:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_handlers_register_session_ts_import_room_manager_js:packages/gateway-hub/src/server.ts:6:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_server_ts_import_handlers_register_session_js:packages/gateway-hub/src/server.ts:7:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_server_ts_import_handlers_request_approval_js:packages/gateway-hub/src/server.ts:8:0",
+        "edge:file_packages_gateway_hub_src_server_ts:imports:ref_packages_gateway_hub_src_server_ts_import_handlers_resolve_approval_js:packages/gateway-hub/src/server.ts:9:0",
+        "node:file_packages_gateway_hub_src_server_ts"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_raw_tostring",
+      "name": "raw.toString",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "raw.toString appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_raw_tostring:packages/gateway-hub/src/server.ts:19:0",
+        "edge:file_packages_gateway_hub_test_junior_ts:calls:ref_packages_gateway_hub_src_server_ts_call_raw_tostring:packages/gateway-hub/test/junior.ts:34:0",
+        "edge:file_packages_gateway_hub_test_junior_ts:calls:ref_packages_gateway_hub_src_server_ts_call_raw_tostring:packages/gateway-hub/test/junior.ts:58:0",
+        "edge:file_packages_gateway_hub_test_senior_ts:calls:ref_packages_gateway_hub_src_server_ts_call_raw_tostring:packages/gateway-hub/test/senior.ts:48:0",
+        "edge:file_packages_gateway_hub_test_senior_ts:calls:ref_packages_gateway_hub_src_server_ts_call_raw_tostring:packages/gateway-hub/test/senior.ts:56:0",
+        "edge:symbol_packages_gateway_hub_test_flow_test_ts_function_waitmessage:calls:ref_packages_gateway_hub_src_server_ts_call_raw_tostring:packages/gateway-hub/test/flow-test.ts:37:0",
+        "edge:symbol_packages_proxy_mcp_src_index_ts_function_connecthub:calls:ref_packages_gateway_hub_src_server_ts_call_raw_tostring:packages/proxy-mcp/src/index.ts:56:0",
+        "node:ref_packages_gateway_hub_src_server_ts_call_raw_tostring"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_removeclient",
+      "name": "removeClient",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "removeClient appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_removeclient:packages/gateway-hub/src/server.ts:32:0",
+        "node:ref_packages_gateway_hub_src_server_ts_call_removeclient"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_removeclientconnection",
+      "name": "removeClientConnection",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "removeClientConnection appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_removeclientconnection:packages/gateway-hub/src/server.ts:33:0",
+        "node:ref_packages_gateway_hub_src_server_ts_call_removeclientconnection"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_socket_on",
+      "name": "socket.on",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "socket.on appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_socket_on:packages/gateway-hub/src/server.ts:16:0",
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_socket_on:packages/gateway-hub/src/server.ts:29:0",
+        "node:ref_packages_gateway_hub_src_server_ts_call_socket_on"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:entrypoint_packages_gateway_hub_src_server_ts_wss_on",
+      "name": "wss.on",
+      "entryType": "cli",
+      "boundaryKind": "entrypoint",
+      "sourcePath": "packages/gateway-hub/src/server.ts",
+      "subsystemId": "subsystem-4-0-packages-gateway-hub",
+      "summary": "wss.on appears to be a entrypoint boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_server_ts:calls:ref_packages_gateway_hub_src_server_ts_call_wss_on:packages/gateway-hub/src/server.ts:15:0",
+        "node:ref_packages_gateway_hub_src_server_ts_call_wss_on"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:cli_packages_gateway_hub_test_flow_test_ts_main",
+      "name": "main",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/test/flow-test.ts",
+      "subsystemId": "subsystem-2-0-packages-gateway-hub",
+      "summary": "main appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_test_flow_test_ts:calls:ref_packages_gateway_hub_test_flow_test_ts_call_main:packages/gateway-hub/test/flow-test.ts:186:0",
+        "edge:file_packages_gateway_hub_test_flow_test_ts:calls:ref_packages_gateway_hub_test_flow_test_ts_call_main:packages/gateway-hub/test/flow-test.ts:48:0",
+        "edge:file_packages_gateway_hub_test_junior_ts:calls:ref_packages_gateway_hub_test_flow_test_ts_call_main:packages/gateway-hub/test/junior.ts:16:0",
+        "edge:file_packages_gateway_hub_test_junior_ts:calls:ref_packages_gateway_hub_test_flow_test_ts_call_main:packages/gateway-hub/test/junior.ts:91:0",
+        "edge:file_packages_gateway_hub_test_senior_ts:calls:ref_packages_gateway_hub_test_flow_test_ts_call_main:packages/gateway-hub/test/senior.ts:135:0",
+        "edge:file_packages_gateway_hub_test_senior_ts:calls:ref_packages_gateway_hub_test_flow_test_ts_call_main:packages/gateway-hub/test/senior.ts:30:0",
+        "edge:file_packages_proxy_mcp_src_index_ts:calls:ref_packages_gateway_hub_test_flow_test_ts_call_main:packages/proxy-mcp/src/index.ts:268:0",
+        "edge:file_packages_proxy_mcp_src_index_ts:calls:ref_packages_gateway_hub_test_flow_test_ts_call_main:packages/proxy-mcp/src/index.ts:284:0",
+        "node:ref_packages_gateway_hub_test_flow_test_ts_call_main"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_mcpserver",
+      "name": "McpServer",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "McpServer appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:file_packages_proxy_mcp_src_mcp_server_ts:contains:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:packages/proxy-mcp/src/mcp-server.ts:31:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_gateway_hub_src_handlers_resolve_approval_ts_call_string:packages/proxy-mcp/src/mcp-server.ts:116:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_gateway_hub_src_room_manager_ts_call_map:packages/proxy-mcp/src/mcp-server.ts:33:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_handle:packages/proxy-mcp/src/mcp-server.ts:70:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_handler:packages/proxy-mcp/src/mcp-server.ts:113:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_handlers_get:packages/proxy-mcp/src/mcp-server.ts:103:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_handlers_set:packages/proxy-mcp/src/mcp-server.ts:42:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_tools_push:packages/proxy-mcp/src/mcp-server.ts:41:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_tool:packages/proxy-mcp/src/mcp-server.ts:35:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:contains:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:packages/proxy-mcp/src/mcp-server.ts:46:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:contains:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_tool:packages/proxy-mcp/src/mcp-server.ts:35:0",
+        "node:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_mcpserver_start",
+      "name": "McpServer.start()",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "McpServer.start() appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:contains:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:packages/proxy-mcp/src/mcp-server.ts:46:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_gateway_hub_src_json_rpc_ts_call_json_stringify:packages/proxy-mcp/src/mcp-server.ts:65:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_gateway_hub_src_server_ts_call_json_parse:packages/proxy-mcp/src/mcp-server.ts:58:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_gateway_hub_test_senior_ts_call_async:packages/proxy-mcp/src/mcp-server.ts:52:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_gateway_hub_test_senior_ts_call_readline_createinterface:packages/proxy-mcp/src/mcp-server.ts:47:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_line_trim:packages/proxy-mcp/src/mcp-server.ts:53:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_rl_on:packages/proxy-mcp/src/mcp-server.ts:52:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_stdout_write:packages/proxy-mcp/src/mcp-server.ts:65:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_this_handle:packages/proxy-mcp/src/mcp-server.ts:63:0",
+        "node:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_packages_proxy_mcp_src_mcp_server_ts",
+      "name": "packages/proxy-mcp/src/mcp-server.ts",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "packages/proxy-mcp/src/mcp-server.ts appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:file_packages_proxy_mcp_src_mcp_server_ts:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_stdio:packages/proxy-mcp/src/mcp-server.ts:2:0",
+        "edge:file_packages_proxy_mcp_src_mcp_server_ts:contains:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:packages/proxy-mcp/src/mcp-server.ts:31:0",
+        "edge:file_packages_proxy_mcp_src_mcp_server_ts:imports:ref_packages_proxy_mcp_src_mcp_server_ts_import_node_readline:packages/proxy-mcp/src/mcp-server.ts:9:0",
+        "node:file_packages_proxy_mcp_src_mcp_server_ts"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "route:cli_packages_gateway_hub_src_connection_store_ts_clientinfo",
+      "name": "ClientInfo",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/src/connection-store.ts",
+      "subsystemId": "subsystem-7-0-packages-gateway-hub",
+      "summary": "ClientInfo appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_connection_store_ts:calls:ref_packages_gateway_hub_src_connection_store_ts_call_clientinfo:packages/gateway-hub/src/connection-store.ts:4:0",
+        "node:ref_packages_gateway_hub_src_connection_store_ts_call_clientinfo"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_gateway_hub_src_connection_store_ts_clients_delete",
+      "name": "clients.delete",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/src/connection-store.ts",
+      "subsystemId": "subsystem-7-0-packages-gateway-hub",
+      "summary": "clients.delete appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:symbol_packages_gateway_hub_src_connection_store_ts_function_removeclientconnection:calls:ref_packages_gateway_hub_src_connection_store_ts_call_clients_delete:packages/gateway-hub/src/connection-store.ts:19:0",
+        "node:ref_packages_gateway_hub_src_connection_store_ts_call_clients_delete"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_gateway_hub_src_connection_store_ts_clients_get",
+      "name": "clients.get",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/src/connection-store.ts",
+      "subsystemId": "subsystem-7-0-packages-gateway-hub",
+      "summary": "clients.get appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:symbol_packages_gateway_hub_src_connection_store_ts_function_getclient:calls:ref_packages_gateway_hub_src_connection_store_ts_call_clients_get:packages/gateway-hub/src/connection-store.ts:14:0",
+        "node:ref_packages_gateway_hub_src_connection_store_ts_call_clients_get"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_gateway_hub_src_connection_store_ts_clients_set",
+      "name": "clients.set",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/src/connection-store.ts",
+      "subsystemId": "subsystem-7-0-packages-gateway-hub",
+      "summary": "clients.set appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:symbol_packages_gateway_hub_src_connection_store_ts_function_registerclient:calls:ref_packages_gateway_hub_src_connection_store_ts_call_clients_set:packages/gateway-hub/src/connection-store.ts:9:0",
+        "node:ref_packages_gateway_hub_src_connection_store_ts_call_clients_set"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_gateway_hub_src_handlers_register_session_ts_registerclient",
+      "name": "registerClient",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/src/handlers/register-session.ts",
+      "subsystemId": "subsystem-9-0-packages-gateway-hub",
+      "summary": "registerClient appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_src_handlers_register_session_ts:calls:ref_packages_gateway_hub_src_handlers_register_session_ts_call_registerclient:packages/gateway-hub/src/handlers/register-session.ts:28:0",
+        "node:ref_packages_gateway_hub_src_handlers_register_session_ts_call_registerclient"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_gateway_hub_test_start_server_ts_console_log",
+      "name": "console.log",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/test/start-server.ts",
+      "subsystemId": "subsystem-14-0-packages-gateway-hub",
+      "summary": "console.log appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_test_start_server_ts:calls:ref_packages_gateway_hub_test_start_server_ts_call_console_log:packages/gateway-hub/test/start-server.ts:6:0",
+        "edge:file_packages_gateway_hub_test_start_server_ts:calls:ref_packages_gateway_hub_test_start_server_ts_call_console_log:packages/gateway-hub/test/start-server.ts:7:0",
+        "node:ref_packages_gateway_hub_test_start_server_ts_call_console_log"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_gateway_hub_test_start_server_ts_packages_gateway_hub_test_start_server_ts",
+      "name": "packages/gateway-hub/test/start-server.ts",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/gateway-hub/test/start-server.ts",
+      "subsystemId": "subsystem-14-0-packages-gateway-hub",
+      "summary": "packages/gateway-hub/test/start-server.ts appears to be a cli boundary for packages/gateway-hub.",
+      "evidence": [
+        "edge:file_packages_gateway_hub_test_start_server_ts:calls:ref_packages_gateway_hub_test_start_server_ts_call_console_log:packages/gateway-hub/test/start-server.ts:6:0",
+        "edge:file_packages_gateway_hub_test_start_server_ts:calls:ref_packages_gateway_hub_test_start_server_ts_call_console_log:packages/gateway-hub/test/start-server.ts:7:0",
+        "node:file_packages_gateway_hub_test_start_server_ts"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_index_ts_mcp_server_js",
+      "name": "./mcp-server.js",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/index.ts",
+      "subsystemId": "subsystem-1-0-packages-proxy-mcp",
+      "summary": "./mcp-server.js appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:file_packages_proxy_mcp_src_index_ts:imports:ref_packages_proxy_mcp_src_index_ts_import_mcp_server_js:packages/proxy-mcp/src/index.ts:15:0",
+        "node:ref_packages_proxy_mcp_src_index_ts_import_mcp_server_js"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_index_ts_mcpserver",
+      "name": "McpServer",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/index.ts",
+      "subsystemId": "subsystem-1-0-packages-proxy-mcp",
+      "summary": "McpServer appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:file_packages_proxy_mcp_src_index_ts:calls:ref_packages_proxy_mcp_src_index_ts_call_mcpserver:packages/proxy-mcp/src/index.ts:126:0",
+        "node:ref_packages_proxy_mcp_src_index_ts_call_mcpserver"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_index_ts_server_start",
+      "name": "server.start",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/index.ts",
+      "subsystemId": "subsystem-1-0-packages-proxy-mcp",
+      "summary": "server.start appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:file_packages_proxy_mcp_src_index_ts:calls:ref_packages_proxy_mcp_src_index_ts_call_server_start:packages/proxy-mcp/src/index.ts:281:0",
+        "node:ref_packages_proxy_mcp_src_index_ts_call_server_start"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_index_ts_server_tool",
+      "name": "server.tool",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/index.ts",
+      "subsystemId": "subsystem-1-0-packages-proxy-mcp",
+      "summary": "server.tool appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:file_packages_proxy_mcp_src_index_ts:calls:ref_packages_proxy_mcp_src_index_ts_call_server_tool:packages/proxy-mcp/src/index.ts:135:0",
+        "edge:file_packages_proxy_mcp_src_index_ts:calls:ref_packages_proxy_mcp_src_index_ts_call_server_tool:packages/proxy-mcp/src/index.ts:243:0",
+        "node:ref_packages_proxy_mcp_src_index_ts_call_server_tool"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_mcpserver_tool",
+      "name": "McpServer.tool()",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "McpServer.tool() appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_tool:packages/proxy-mcp/src/mcp-server.ts:35:0",
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:contains:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_tool:packages/proxy-mcp/src/mcp-server.ts:35:0",
+        "node:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_tool"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_handle",
+      "name": "handle",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "handle appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_handle:packages/proxy-mcp/src/mcp-server.ts:70:0",
+        "node:ref_packages_proxy_mcp_src_mcp_server_ts_call_handle"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_handler",
+      "name": "handler",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "handler appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_handler:packages/proxy-mcp/src/mcp-server.ts:113:0",
+        "node:ref_packages_proxy_mcp_src_mcp_server_ts_call_handler"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_handlers_get",
+      "name": "handlers.get",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "handlers.get appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_handlers_get:packages/proxy-mcp/src/mcp-server.ts:103:0",
+        "node:ref_packages_proxy_mcp_src_mcp_server_ts_call_handlers_get"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_handlers_set",
+      "name": "handlers.set",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "handlers.set appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_handlers_set:packages/proxy-mcp/src/mcp-server.ts:42:0",
+        "node:ref_packages_proxy_mcp_src_mcp_server_ts_call_handlers_set"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_line_trim",
+      "name": "line.trim",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "line.trim appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_line_trim:packages/proxy-mcp/src/mcp-server.ts:53:0",
+        "node:ref_packages_proxy_mcp_src_mcp_server_ts_call_line_trim"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_node_readline",
+      "name": "node:readline",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "node:readline appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:file_packages_proxy_mcp_src_mcp_server_ts:imports:ref_packages_proxy_mcp_src_mcp_server_ts_import_node_readline:packages/proxy-mcp/src/mcp-server.ts:9:0",
+        "node:ref_packages_proxy_mcp_src_mcp_server_ts_import_node_readline"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_rl_on",
+      "name": "rl.on",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "rl.on appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_rl_on:packages/proxy-mcp/src/mcp-server.ts:52:0",
+        "node:ref_packages_proxy_mcp_src_mcp_server_ts_call_rl_on"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_stdio",
+      "name": "stdio",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "stdio appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:file_packages_proxy_mcp_src_mcp_server_ts:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_stdio:packages/proxy-mcp/src/mcp-server.ts:2:0",
+        "node:ref_packages_proxy_mcp_src_mcp_server_ts_call_stdio"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_stdout_write",
+      "name": "stdout.write",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "stdout.write appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_stdout_write:packages/proxy-mcp/src/mcp-server.ts:65:0",
+        "node:ref_packages_proxy_mcp_src_mcp_server_ts_call_stdout_write"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_this_handle",
+      "name": "this.handle",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "this.handle appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_method_mcpserver_start:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_this_handle:packages/proxy-mcp/src/mcp-server.ts:63:0",
+        "node:ref_packages_proxy_mcp_src_mcp_server_ts_call_this_handle"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "route:cli_packages_proxy_mcp_src_mcp_server_ts_tools_push",
+      "name": "tools.push",
+      "entryType": "cli",
+      "boundaryKind": "cli",
+      "sourcePath": "packages/proxy-mcp/src/mcp-server.ts",
+      "subsystemId": "subsystem-5-0-packages-proxy-mcp",
+      "summary": "tools.push appears to be a cli boundary for packages/proxy-mcp.",
+      "evidence": [
+        "edge:symbol_packages_proxy_mcp_src_mcp_server_ts_class_mcpserver:calls:ref_packages_proxy_mcp_src_mcp_server_ts_call_tools_push:packages/proxy-mcp/src/mcp-server.ts:41:0",
+        "node:ref_packages_proxy_mcp_src_mcp_server_ts_call_tools_push"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "inferredRoutes": []
+}
